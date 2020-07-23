@@ -2,14 +2,12 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using Firebase.Crashlytics;
 using UnityEngine;
 using Debug	= UnityEngine.Debug;
 using Object = UnityEngine.Object;
 
 public static class DebugFormat
 {
-	static readonly bool	LOG_CRASHLYTICS		= false;
 
 	static readonly int		mainThreadId		= Thread.CurrentThread.ManagedThreadId;
 	static			bool	IsMainThread		=> Thread.CurrentThread.ManagedThreadId == mainThreadId;
@@ -36,27 +34,117 @@ public static class DebugFormat
 	private static  Object	Target<T>			(T instance, Object target = null) 
 		=> target == null ? (instance is Object ? instance as Object : null) : (target);
 
-	public static	string	Log<T>			()																			{ var str = Format<T>();						Debug.Log(str);															try { if (LOG_CRASHLYTICS) Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); } return str; }
-	public static	string	Log<T>			(				string message,		 Object target = null, int deep = 3)	{ var str = Format<T>(message, deep);			Debug.Log(str, target);													try { if (LOG_CRASHLYTICS) Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); } return str; }
-	public static	string	Log<T>			(T instance,	string message = "", Object target = null, int deep = 3)	{ var str = Format<T>(message, deep);			Debug.Log(str, Target(instance, target));								try { if (LOG_CRASHLYTICS) Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); } return str; }
+	public static	string	Log<T>			()																			
+	{ 
+		var str = Format<T>();						
+		Debug.Log(str);
+#if LOG_CRASHLYTICS
+		try { Firebase.Crashlytics.Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); } 
+#endif
+		return str;
+	}
+	public static	string	Log<T>			(				string message,		 Object target = null, int deep = 3)	
+	{ 
+		var str = Format<T>(message, deep);			
+		Debug.Log(str, target);
+#if LOG_CRASHLYTICS
+		try { Firebase.Crashlytics.Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); }
+#endif
+		return str; 
+	}
+	public static	string	Log<T>			(T instance,	string message = "", Object target = null, int deep = 3)	
+	{
+		var str = Format<T>(message, deep);			
+		Debug.Log(str, Target(instance, target));
+#if LOG_CRASHLYTICS
+		try { Firebase.Crashlytics.Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); }
+#endif
+		return str; 
+	}
 
 	// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	public static	string	LogWarning<T>	()																			{ var str = FormatWarning<T>();					Debug.LogWarning(str);													try { if (LOG_CRASHLYTICS) Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); } return str; }
-	public static	string	LogWarning<T>	(				string message,		 Object target = null, int deep = 3)	{ var str = FormatWarning<T>(message, deep);	Debug.LogWarning(str, target);											try { if (LOG_CRASHLYTICS) Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); } return str; }
-	public static	string	LogWarning<T>	(T instance,	string message = "", Object target = null, int deep = 3)	{ var str = FormatWarning<T>(message, deep);	Debug.LogWarning(FormatWarning<T>(message), Target(instance, target));	try { if (LOG_CRASHLYTICS) Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); } return str; }
+	public static	string	LogWarning<T>	()																			
+	{ 
+		var str = FormatWarning<T>();					
+		Debug.LogWarning(str);
+#if LOG_CRASHLYTICS
+		try { Firebase.Crashlytics.Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); }
+#endif
+		return str; 
+	}
+	public static	string	LogWarning<T>	(				string message,		 Object target = null, int deep = 3)	
+	{ 
+		var str = FormatWarning<T>(message, deep);	
+		Debug.LogWarning(str, target);
+#if LOG_CRASHLYTICS
+		try { Firebase.Crashlytics.Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); }
+#endif
+		return str; 
+	}
+	public static	string	LogWarning<T>	(T instance,	string message = "", Object target = null, int deep = 3)	
+	{ 
+		var str = FormatWarning<T>(message, deep);	
+		Debug.LogWarning(FormatWarning<T>(message), Target(instance, target));
+#if LOG_CRASHLYTICS
+		try { Firebase.Crashlytics.Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); }
+#endif
+		return str; 
+	}
 
 	// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	public static	string	LogError<T>		()																			{ var str = FormatError<T>();					Debug.LogError(str);													try { if (LOG_CRASHLYTICS) Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); } return str; }
-	public static	string	LogError<T>		(				string message,		 Object target = null, int deep = 3)	{ var str = FormatError<T>(message, deep);		Debug.LogError(str, target);											try { if (LOG_CRASHLYTICS) Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); } return str; }
-	public static	string	LogError<T>		(T instance,	string message = "", Object target = null, int deep = 3)	{ var str = FormatError<T>(message, deep);		Debug.LogError(str, Target(instance, target));							try { if (LOG_CRASHLYTICS) Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); } return str; }
+	public static	string	LogError<T>		()																			
+	{ 
+		var str = FormatError<T>();					
+		Debug.LogError(str);
+#if LOG_CRASHLYTICS
+		try { Firebase.Crashlytics.Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); }
+#endif
+		return str; 
+	}
+	public static	string	LogError<T>		(				string message,		 Object target = null, int deep = 3)	
+	{
+		var str = FormatError<T>(message, deep);		
+		Debug.LogError(str, target);
+#if LOG_CRASHLYTICS
+		try { Firebase.Crashlytics.Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); }
+#endif
+		return str; 
+	}
+	public static	string	LogError<T>		(T instance,	string message = "", Object target = null, int deep = 3)	
+	{ 
+		var str = FormatError<T>(message, deep);		
+		Debug.LogError(str, Target(instance, target));
+#if LOG_CRASHLYTICS
+		try { Firebase.Crashlytics.Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); }
+#endif
+		return str; 
+	}
 
 	// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	public static	void	LogException<T>	(				Exception ex)												{												Debug.LogException(ex);													try { if (LOG_CRASHLYTICS) Crashlytics.LogException(ex); } catch (Exception e) { Debug.LogException(e); }  }
-	public static	void	LogException<T>	(				Exception ex, Object target = null)							{												Debug.LogException(ex, target);											try { if (LOG_CRASHLYTICS) Crashlytics.LogException(ex); } catch (Exception e) { Debug.LogException(e); }  }
-	public static	void	LogException<T>	(T instance,	Exception ex, Object target = null)							{												Debug.LogException(ex, Target(instance, target));						try { if (LOG_CRASHLYTICS) Crashlytics.LogException(ex); } catch (Exception e) { Debug.LogException(e); }  }
+	public static	void	LogException<T>	(				Exception ex)												
+	{												
+		Debug.LogException(ex);
+#if LOG_CRASHLYTICS
+		try { Firebase.Crashlytics.Crashlytics.LogException(ex); } catch (Exception e) { Debug.LogException(e); }
+#endif
+	}
+	public static	void	LogException<T>	(				Exception ex, Object target = null)							
+	{												
+		Debug.LogException(ex, target);
+#if LOG_CRASHLYTICS
+		try { Firebase.Crashlytics.Crashlytics.LogException(ex); } catch (Exception e) { Debug.LogException(e); }
+#endif
+	}
+	public static	void	LogException<T>	(T instance,	Exception ex, Object target = null)							
+	{												
+		Debug.LogException(ex, Target(instance, target));
+#if LOG_CRASHLYTICS
+		try { Firebase.Crashlytics.Crashlytics.LogException(ex); } catch (Exception e) { Debug.LogException(e); }
+#endif
+	}
 
 	// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
