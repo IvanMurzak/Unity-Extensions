@@ -25,19 +25,17 @@ public class Saver<T> : ISavable, ILoadable<T>
 		return File.Exists(fullPath);
 	}
 
-	private static			void		Save						(T data, string path, string fileName)
+	public static			void		Save						(T data, string path, string fileName)
 	{
 		Save(data, FullPath(path, fileName));
 	}
-	private static			void		Save						(T data, string fullPath)
+	public static			void		Save						(T data, string fullPath)
 	{
 		Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
-		// DebugFormat.Log<Saver<T>>($"Full Path: {fullPath}");
-		// DebugFormat.PrintObjectStructure(data);
 		var bytes = SerializationUtility.SerializeValue(data, DataFormat.Binary);
 		File.WriteAllBytes(fullPath, EncryptionUtils.Encrypt(bytes));
 	}
-	private static			T			Load						(string path, string fileName)
+	public static			T			Load						(string path, string fileName)
 	{
 		return Load(FullPath(path, fileName));
 	}

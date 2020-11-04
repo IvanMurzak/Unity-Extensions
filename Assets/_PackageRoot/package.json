@@ -1,10 +1,19 @@
 {
     "name": "extensions.unity.base",
     "displayName": "Unity Extensions",
-    "version": "1.0.8",
+    "version": "1.1.1",
     "unity": "2019.2",
     "description": "Includes many helper classes.",
 	"dependencies": {
       
+    },
+	"scopedRegistries": [
+    {
+      "name": "Unity Extensions",
+      "url": "https://registry.npmjs.org",
+      "scopes": [
+        "extensions.unity"
+      ]
     }
+  ]
 }
