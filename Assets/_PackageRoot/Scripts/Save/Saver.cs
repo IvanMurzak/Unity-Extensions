@@ -49,7 +49,6 @@ public class Saver<T> : ISavable, ILoadable<T>
 		if (!File.Exists(fullPath))
 		{
 			data = Activator.CreateInstance<T>();
-			// DebugFormat.PrintObjectStructure(data);
 			return data;
 		}
 		byte[] bytes = File.ReadAllBytes(fullPath);
@@ -64,6 +63,13 @@ public class Saver<T> : ISavable, ILoadable<T>
 		}
 		// DebugFormat.PrintObjectStructure(data);
 		return data;
+	}
+	public	static			void		Delete						(string fullPath)
+	{
+		if (File.Exists(fullPath))
+		{
+			File.Delete(fullPath);
+		}
 	}
 	public	static			void		DeleteAllSaves				()
 	{

@@ -11,7 +11,7 @@ public abstract class SaverMonoBehaviour<T> : BaseMonoBehaviour, IPreBuildSetup
 	private				Subject<T>					onDataLoaded			= new Subject<T>();
 	private				Subject<T>					onDataModified			= new Subject<T>();
 
-	[NonSerialized, OdinSerialize]
+	[NonSerialized, OdinSerialize, Required, DisableInPrefabAssets]
     [BoxGroup("Saving", false), BoxGroup("Saving/Data", false)/*, ShowIf("HasSaver")*/]
     private				Saver<T>					saver;
 
@@ -39,12 +39,14 @@ public abstract class SaverMonoBehaviour<T> : BaseMonoBehaviour, IPreBuildSetup
 	[HorizontalGroup("Managering Data"), Button(ButtonSizes.Medium)]
 	public T Load()
 	{
+		if (saver == null) DebugFormat.LogError(this, "Saver is not initialized!");
 		Data = PrepareData(saver.Load());
 		NotifyLoadingDataListeners(loadingDataListeners, Data);
 		return Data;
 	}
 	public Task LoadAsync()
 	{
+		if (saver == null) DebugFormat.LogError(this, "Saver is not initialized!");
 		return saver.LoadAsync(task =>
 		{
 			Data = PrepareData(saver.data);
@@ -54,18 +56,21 @@ public abstract class SaverMonoBehaviour<T> : BaseMonoBehaviour, IPreBuildSetup
 	[HorizontalGroup("Managering Data"), Button(ButtonSizes.Medium)]
 	public void Save()
 	{
+		if (saver == null) DebugFormat.LogError(this, "Saver is not initialized!");
 		saver.data = PrepeareDataBeforeSave(Data);
 		saver.Save();
 		onSaveStarted.OnNext(Data);
 	}
 	public void SaveAsync()
 	{
+		if (saver == null) DebugFormat.LogError(this, "Saver is not initialized!");
 		saver.data = PrepeareDataBeforeSave(Data);
 		saver.SaveAsync();
 		onSaveStarted.OnNext(Data);
 	}
 	public void SaveAsyncDelayed()
 	{
+		if (saver == null) DebugFormat.LogError(this, "Saver is not initialized!");
 		saver.data = PrepeareDataBeforeSave(Data);
 		saver.SaveAsyncDelayed();
 		onSaveStarted.OnNext(Data);
@@ -74,11 +79,13 @@ public abstract class SaverMonoBehaviour<T> : BaseMonoBehaviour, IPreBuildSetup
 
 	protected virtual void Start()
     {
-        loadingDataListeners = GetComponents<ISaverOnLoadedListener<T>>();
+		PreBuildSetup();
+
+		loadingDataListeners = GetComponents<ISaverOnLoadedListener<T>>();
         var dataModifiers = GetComponents<ISaverDataModifier<T>>();
 
-		Load();
 		ObserveDataModifiers(dataModifiers);
+		Load();
     }
     protected virtual T PrepareData(T data)
     {
@@ -113,8 +120,7 @@ public abstract class SaverMonoBehaviour<T> : BaseMonoBehaviour, IPreBuildSetup
 	{
 		if (saver == null)	saver = new Saver<T>(SaverPath, SaverFileName);
 		else				saver.UpdatePath(SaverPath, SaverFileName);
-
-		PrefabUtils.EditorApplyPrefabChanges(this);
+		// PrefabUtils.EditorApplyPrefabChanges(this);
 	}
 	private void OnApplicationPause(bool pauseStatus)
 	{
