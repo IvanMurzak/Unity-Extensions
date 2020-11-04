@@ -124,3 +124,35 @@ public class PlayerPrefsExBigInt
 		this.DefaultValue	= defaultValue;
 	}
 }
+public class PlayerPrefsExVector3
+{
+	public	string		Key				{ get; private set; }
+	public	Vector3		DefaultValue	{ get; private set; }
+	public	Vector3		Value
+	{
+		get => PlayerPrefsEx.GetVector3(Key, DefaultValue);
+		set => PlayerPrefsEx.SetVector3(Key, value);
+	}
+
+	public PlayerPrefsExVector3(string key, Vector3 defaultValue)
+	{
+		this.Key			= key + UniqueHash.Hash;
+		this.DefaultValue	= defaultValue;
+	}
+}
+public class PlayerPrefsExVector2
+{
+	public	string		Key				{ get; private set; }
+	public	Vector2		DefaultValue	{ get; private set; }
+	public	Vector2		Value
+	{
+		get => PlayerPrefsEx.GetVector2(Key, DefaultValue);
+		set => PlayerPrefsEx.SetVector2(Key, value);
+	}
+
+	public PlayerPrefsExVector2(string key, Vector2 defaultValue)
+	{
+		this.Key			= key + UniqueHash.Hash;
+		this.DefaultValue	= defaultValue;
+	}
+}
