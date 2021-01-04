@@ -8,7 +8,6 @@ using Object = UnityEngine.Object;
 
 public static class DebugFormat
 {
-
 	static readonly int		mainThreadId		= Thread.CurrentThread.ManagedThreadId;
 	static			bool	IsMainThread		=> Thread.CurrentThread.ManagedThreadId == mainThreadId;
 
@@ -34,119 +33,29 @@ public static class DebugFormat
 	private static  Object	Target<T>			(T instance, Object target = null) 
 		=> target == null ? (instance is Object ? instance as Object : null) : (target);
 
-	public static	string	Log<T>			()																			
-	{ 
-		var str = Format<T>();						
-		Debug.Log(str);
-#if LOG_CRASHLYTICS
-		try { Firebase.Crashlytics.Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); } 
-#endif
-		return str;
-	}
-	public static	string	Log<T>			(				string message,		 Object target = null, int deep = 3)	
-	{ 
-		var str = Format<T>(message, deep);			
-		Debug.Log(str, target);
-#if LOG_CRASHLYTICS
-		try { Firebase.Crashlytics.Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); }
-#endif
-		return str; 
-	}
-	public static	string	Log<T>			(T instance,	string message = "", Object target = null, int deep = 3)	
-	{
-		var str = Format<T>(message, deep);			
-		Debug.Log(str, Target(instance, target));
-#if LOG_CRASHLYTICS
-		try { Firebase.Crashlytics.Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); }
-#endif
-		return str; 
-	}
+	public static	string	Log<T>				(int deep = 3)																{ var str = Format<T>(deep: deep);					Debug.Log(str); 														return str; }
+	public static	string	Log<T>				(				string message, Object target = null, int deep = 3)			{ var str = Format<T>(message, deep: deep);			Debug.Log(str, target);													return str; }
+	public static	string	Log<T>				(T instance,	string message = "", Object target = null, int deep = 3)	{ var str = Format<T>(message, deep: deep);			Debug.Log(str, Target(instance, target));								return str; }
 
-	// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	public static	string	LogWarning<T>	()																			
-	{ 
-		var str = FormatWarning<T>();					
-		Debug.LogWarning(str);
-#if LOG_CRASHLYTICS
-		try { Firebase.Crashlytics.Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); }
-#endif
-		return str; 
-	}
-	public static	string	LogWarning<T>	(				string message,		 Object target = null, int deep = 3)	
-	{ 
-		var str = FormatWarning<T>(message, deep);	
-		Debug.LogWarning(str, target);
-#if LOG_CRASHLYTICS
-		try { Firebase.Crashlytics.Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); }
-#endif
-		return str; 
-	}
-	public static	string	LogWarning<T>	(T instance,	string message = "", Object target = null, int deep = 3)	
-	{ 
-		var str = FormatWarning<T>(message, deep);	
-		Debug.LogWarning(FormatWarning<T>(message), Target(instance, target));
-#if LOG_CRASHLYTICS
-		try { Firebase.Crashlytics.Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); }
-#endif
-		return str; 
-	}
+	public static	string	LogWarning<T>		(int deep = 3)																{ var str = FormatWarning<T>(deep: deep);			Debug.LogWarning(str);													return str; }
+	public static	string	LogWarning<T>		(				string message, Object target = null, int deep = 3)			{ var str = FormatWarning<T>(message, deep: deep);	Debug.LogWarning(str, target);											return str; }
+	public static	string	LogWarning<T>		(T instance,	string message = "", Object target = null, int deep = 3)	{ var str = FormatWarning<T>(message, deep: deep);	Debug.LogWarning(FormatWarning<T>(message), Target(instance, target));	return str; }
 
-	// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	public static	string	LogError<T>		()																			
-	{ 
-		var str = FormatError<T>();					
-		Debug.LogError(str);
-#if LOG_CRASHLYTICS
-		try { Firebase.Crashlytics.Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); }
-#endif
-		return str; 
-	}
-	public static	string	LogError<T>		(				string message,		 Object target = null, int deep = 3)	
-	{
-		var str = FormatError<T>(message, deep);		
-		Debug.LogError(str, target);
-#if LOG_CRASHLYTICS
-		try { Firebase.Crashlytics.Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); }
-#endif
-		return str; 
-	}
-	public static	string	LogError<T>		(T instance,	string message = "", Object target = null, int deep = 3)	
-	{ 
-		var str = FormatError<T>(message, deep);		
-		Debug.LogError(str, Target(instance, target));
-#if LOG_CRASHLYTICS
-		try { Firebase.Crashlytics.Crashlytics.Log(str); } catch (Exception e) { Debug.LogException(e); }
-#endif
-		return str; 
-	}
+	public static	string	LogError<T>			(int deep = 3)																{ var str = FormatError<T>(deep: deep);				Debug.LogError(str);													return str; }
+	public static	string	LogError<T>			(				string message, Object target = null, int deep = 3)			{ var str = FormatError<T>(message, deep: deep);	Debug.LogError(str, target);											return str; }
+	public static	string	LogError<T>			(T instance,	string message = "", Object target = null, int deep = 3)	{ var str = FormatError<T>(message, deep: deep);	Debug.LogError(str, Target(instance, target));							return str; }
 
-	// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	public static	void	LogException<T>	(				Exception ex)												
-	{												
-		Debug.LogException(ex);
-#if LOG_CRASHLYTICS
-		try { Firebase.Crashlytics.Crashlytics.LogException(ex); } catch (Exception e) { Debug.LogException(e); }
-#endif
-	}
-	public static	void	LogException<T>	(				Exception ex, Object target = null)							
-	{												
-		Debug.LogException(ex, target);
-#if LOG_CRASHLYTICS
-		try { Firebase.Crashlytics.Crashlytics.LogException(ex); } catch (Exception e) { Debug.LogException(e); }
-#endif
-	}
-	public static	void	LogException<T>	(T instance,	Exception ex, Object target = null)							
-	{												
-		Debug.LogException(ex, Target(instance, target));
-#if LOG_CRASHLYTICS
-		try { Firebase.Crashlytics.Crashlytics.LogException(ex); } catch (Exception e) { Debug.LogException(e); }
-#endif
-	}
+	public static	void	LogException<T>		(				Exception ex)												{													Debug.LogException(ex); }
+	public static	void	LogException<T>		(				Exception ex, Object target = null)							{													Debug.LogException(ex, target); }
+	public static	void	LogException<T>		(T instance,	Exception ex, Object target = null)							{													Debug.LogException(ex, Target(instance, target)); }
 
-	// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	public static	void	PrintStackTrace<T>	(T instance, Object target = null)
 	{
@@ -198,10 +107,22 @@ public static class DebugFormat
 		return str + indentFrame + "}\n";
 	}
 
-	private static class Colors
+	public static class Colors
 	{
-		public static string Log		=> IsMainThread ? (Application.isPlaying ? "#2222FF" : "#1E7CAA") : "#3F6B7F";
-		public static string Warning	=> IsMainThread ? (Application.isPlaying ? "#FF6A00" : "#FF8449") : "#A0684E";
-		public static string Error		=> IsMainThread ? (Application.isPlaying ? "#FF0000" : "#FF3278") : "#891F33";
+		public static string PlayingLog			{ get; set; } = "#2222FF";
+		public static string PlayingWarning		{ get; set; } = "#FF6A00";
+		public static string PlayingError		{ get; set; } = "#FF0000";
+
+		public static string EditorLog			{ get; set; } = "#1E7CAA";
+		public static string EditorWarning		{ get; set; } = "#FF8449";
+		public static string EditorError		{ get; set; } = "#FF3278";
+
+		public static string BackgroundLog		{ get; set; } = "#3F6B7F";
+		public static string BackgroundWarning	{ get; set; } = "#A0684E";
+		public static string BackgroundError	{ get; set; } = "#891F33";
+
+		public static string Log				=> IsMainThread ? (Application.isPlaying ? PlayingLog		: EditorLog)		: BackgroundLog;
+		public static string Warning			=> IsMainThread ? (Application.isPlaying ? PlayingWarning	: EditorWarning)	: BackgroundWarning;
+		public static string Error				=> IsMainThread ? (Application.isPlaying ? PlayingError		: EditorError)		: BackgroundError;
 	}
 }

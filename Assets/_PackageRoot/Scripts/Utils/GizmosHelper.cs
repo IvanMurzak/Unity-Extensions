@@ -49,14 +49,15 @@ public static class GizmosHelper
 
 		Gizmos.color = prevColor;
 	}
-	public static void DrawString(string text, Vector3 worldPos, Color? colour = null)
+	public static void DrawString(string text, Vector3 worldPos, int fontSize = 14, Color? colour = null)
 	{
 #if UNITY_EDITOR
 		UnityEditor.Handles.BeginGUI();
+        GUI.skin.label.fontSize = fontSize;
 		if (colour.HasValue) GUI.color = colour.Value;
-		var view = UnityEditor.SceneView.currentDrawingSceneView;
-		Vector3 screenPos = view.camera.WorldToScreenPoint(worldPos);
-		Vector2 size = GUI.skin.label.CalcSize(new GUIContent(text));
+		var view        = UnityEditor.SceneView.currentDrawingSceneView;
+		var screenPos   = view.camera.WorldToScreenPoint(worldPos);
+        var size        = GUI.skin.label.CalcSize(new GUIContent(text));
 		GUI.Label(new Rect(screenPos.x - (size.x / 2), -screenPos.y + view.position.height + 4, size.x, size.y), text);
 		UnityEditor.Handles.EndGUI();
 #endif

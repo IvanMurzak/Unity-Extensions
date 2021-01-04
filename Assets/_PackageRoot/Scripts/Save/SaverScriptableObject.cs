@@ -25,27 +25,27 @@ public abstract class SaverScriptableObject<T> : BaseScriptableObject, ISavable,
 	}
 	public					Task		LoadAsync()				=> saver.LoadAsync(task => OnDataLoaded(Data = PrepareData(saver.data)));
 	[HorizontalGroup("Managering Data"), Button(ButtonSizes.Medium)]
-	public					void		Save()
+	public		virtual		void		Save()
 	{
 		saver.data = OnDataSave(Data);
 		saver.Save();
 	}
-	public					void		SaveAsync()
+	public		virtual		void		SaveAsync()
 	{
 		saver.data = OnDataSave(Data);
 		saver.SaveAsync();
 	}
-	public					void		SaveAsyncDelayed()
+	public		virtual		void		SaveAsyncDelayed()
 	{
 		saver.data = OnDataSave(Data);
 		saver.SaveAsyncDelayed();
 	}
 
 
-	protected virtual		void		OnEnable()				=> Data = Load();
-	protected virtual		T			PrepareData(T data)		=> data;
-	protected abstract		void		OnDataLoaded(T data);
-	protected virtual		T			OnDataSave(T data)		=> data;
+	protected	virtual		void		OnEnable()				=> Data = Load();
+	protected	virtual		T			PrepareData(T data)		=> data;
+	protected	abstract	void		OnDataLoaded(T data);
+	protected	virtual		T			OnDataSave(T data)		=> data;
 
 
 	[FoldoutGroup("Saving"), Button(ButtonSizes.Medium), GUIColor(1, .6f, .4f, 1), ShowIf("HasSaver")]

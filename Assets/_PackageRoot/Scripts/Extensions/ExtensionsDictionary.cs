@@ -3,7 +3,7 @@ using System;
 
 public static class ExtensionsDictionary
 {
-	public static TValue GetOrDefault<TKey, TValue>(this Dictionary<TKey, TValue> original, TKey key, TValue defaultValue = default)
+	public static TValue GetValueOrDefault<TKey, TValue>(this Dictionary<TKey, TValue> original, TKey key, TValue defaultValue = default)
 	{
 		if (original.ContainsKey(key))	return original[key];
 		else							return defaultValue;
@@ -41,6 +41,8 @@ public static class ExtensionsDictionary
             ret.Add(entry.Key, (TValue)entry.Value.Clone());
         return ret;
     }
+
+	// ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	public static SerializableDictionary<TKey, TValue> Copy<TKey, TValue>(this SerializableDictionary<TKey, TValue> original)
 	{

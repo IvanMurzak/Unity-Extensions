@@ -4,11 +4,11 @@ using System.IO;
 
 public static class EncryptionUtils
 {
-#if UNITY_EDITOR
-	private static readonly string KEY	= "unity_editor";
-#else
-	private static readonly string KEY	= SystemInfo.deviceUniqueIdentifier;
-#endif
+//#if UNITY_EDITOR
+//	private static readonly string KEY	= "unity_editor";
+//#else
+	private static readonly string KEY	= SystemInfo.deviceUniqueIdentifier + "_";
+//#endif
 	private static readonly byte[] SALT = new byte[] { 0x43, 0x87, 0x23, 0x72 };
 
 	// Should be called from main thread!
