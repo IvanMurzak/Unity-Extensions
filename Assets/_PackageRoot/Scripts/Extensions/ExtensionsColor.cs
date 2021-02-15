@@ -23,10 +23,27 @@ public static class ExtensionsColor
         return c;
     }
 
-    public static Color Parse(this Color c, string hex)
+    public static bool TryParse(this Color c, string hex)
     {
-        ColorUtility.TryParseHtmlString(hex, out c);
-        return c;
+        hex = hex.Replace("#", "");
+        return ColorUtility.TryParseHtmlString(hex, out c);
+    }
+
+    public static Color Parse(this Color c, string hex, Color defaultColor)
+    {
+        hex = hex.Replace("#", "");
+        if (ColorUtility.TryParseHtmlString(hex, out c))
+		{
+            return c;
+		}
+        else
+		{
+            c.r = defaultColor.r;
+            c.g = defaultColor.g;
+            c.b = defaultColor.b;
+            c.a = defaultColor.a;
+            return defaultColor;
+        }
     }
 
     public static Color Between(this Color from, Color to, float percent)
@@ -38,5 +55,17 @@ public static class ExtensionsColor
             from.b + (to.b - from.b) * percent, 
             from.a + (to.a - from.a) * percent
         );
+    }
+    public static string ToHexRGBA(this Color c, bool addHash = false)
+    {
+        var hex = ColorUtility.ToHtmlStringRGBA(c);
+        if (addHash) return "#" + hex;
+        return hex;
+    }
+    public static string ToHexRGB(this Color c, bool addHash = false)
+    {
+        var hex = ColorUtility.ToHtmlStringRGB(c);
+        if (addHash) return "#" + hex;
+        return hex;
     }
 }
