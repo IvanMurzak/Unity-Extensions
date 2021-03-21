@@ -23,15 +23,16 @@ public static class ExtensionsColor
         return c;
     }
 
-    public static bool TryParse(this Color c, string hex)
+    public static bool TryParseColor(this string hex, out Color c)
     {
-        hex = hex.Replace("#", "");
+        if (!hex.StartsWith("#")) hex = "#" + hex;
         return ColorUtility.TryParseHtmlString(hex, out c);
     }
 
-    public static Color Parse(this Color c, string hex, Color defaultColor)
+    public static Color Parse(this string hex, Color defaultColor)
     {
-        hex = hex.Replace("#", "");
+        var c = new Color();
+        if (!hex.StartsWith("#")) hex = "#" + hex;
         if (ColorUtility.TryParseHtmlString(hex, out c))
 		{
             return c;
