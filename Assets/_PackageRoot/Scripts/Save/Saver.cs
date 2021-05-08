@@ -12,7 +12,11 @@ using UniRx;
 public class Saver<T> : ISavable, ILoadable<T>
 {
 	#region static
+#if UNITY_IOS
+	private static readonly string		PERSISTANT_DATA_PATH		= Application.persistentDataPath + "/Save";
+#else
 	private static readonly string		PERSISTANT_DATA_PATH		= Application.persistentDataPath;
+#endif
 
 	public	static readonly	TaskFactory factory						= new TaskFactory(new LimitedConcurrencyLevelTaskScheduler(1));
 
@@ -71,15 +75,15 @@ public class Saver<T> : ISavable, ILoadable<T>
 	}
 	public	static			void		DeleteAllSaves				()
 	{
-		DebugFormat.Log<Saver<T>>($"path: {Application.persistentDataPath}");
-		Directory.Delete(Application.persistentDataPath, true);
+		DebugFormat.Log<Saver<T>>($"path: {PERSISTANT_DATA_PATH}");
+		Directory.Delete(PERSISTANT_DATA_PATH, true);
 	}
 	private	static			void		CheckSerializableAttribute	()
 	{
 		var serializable = typeof(T).IsDefined(typeof(System.SerializableAttribute), false);
 		if (!serializable) throw new IOException($"{typeof(T).Name} isn't Serializable");
 	}
-	#endregion
+#endregion
 
 	[NonSerialized] Subject<Unit> onSaveAsyncDelayed;
 
