@@ -59,6 +59,15 @@ When NPM repository added, you may optionally add all extensions from the list b
     "extensions.unity.ui": "1.2.2",
     "extensions.unity.network": "1.0.1",
     "extensions.unity.unirx": "1.1.3"
-  }
+  },
+  "scopedRegistries": [
+    {
+      "name": "Unity Extensions",
+      "url": "https://registry.npmjs.org",
+      "scopes": [
+        "extensions.unity"
+      ]
+    }
+  ]
 }
 </code></pre>
