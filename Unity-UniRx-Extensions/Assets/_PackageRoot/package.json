@@ -1,11 +1,11 @@
 {
     "name": "extensions.unity.unirx",
     "displayName": "Unity UniRx extensions",
-    "version": "1.1.2",
+    "version": "1.1.1",
     "unity": "2019.2",
     "description": "Helper classes for UniRx",
 	"dependencies": {
-      
+      "com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts"
     },
     "scopedRegistries": [
       {
