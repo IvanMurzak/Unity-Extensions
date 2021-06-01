@@ -1,7 +1,8 @@
 {
     "name": "extensions.unity.unirx",
     "displayName": "Unity UniRx extensions",
-    "version": "1.1.3",
+	"author": { "name": "Ivan Murzak", "url": "https://github.com/IvanMurzak" },
+    "version": "1.1.4",
     "unity": "2019.2",
     "description": "Helper classes for UniRx",
 	"dependencies": {
