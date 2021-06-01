@@ -1,0 +1,19 @@
+{
+    "name": "your.own.package",
+    "displayName": "Your own package",
+    "version": "1.0.2",
+    "unity": "2019.2",
+    "description": "Some description",
+	"dependencies": {
+      
+    },
+	"scopedRegistries": [
+    {
+      "name": "Unity Extensions",
+      "url": "https://registry.npmjs.org",
+      "scopes": [
+        "extensions.unity"
+      ]
+    }
+  ]
+}

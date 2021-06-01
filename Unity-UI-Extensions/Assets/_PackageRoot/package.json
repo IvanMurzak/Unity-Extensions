@@ -1,0 +1,20 @@
+{
+  "name": "extensions.unity.ui",
+  "displayName": "Unity UI extensions",
+  "version": "1.2.0",
+  "unity": "2019.2",
+  "description": "Helper classes for Unity UI",
+  "dependencies": {
+    "extensions.unity.base": "1.4.9",
+    "extensions.unity.unirx": "1.1.2"
+  },
+  "scopedRegistries": [
+    {
+      "name": "Unity Extensions",
+      "url": "https://registry.npmjs.org",
+      "scopes": [
+        "extensions.unity"
+      ]
+    }
+  ]
+}
