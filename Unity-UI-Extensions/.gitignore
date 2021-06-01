@@ -58,10 +58,17 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-Assets/Demigiant/
+# Packed Addressables
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+
+# Temporary auto-generated Android Assets
+/[Aa]ssets/[Ss]treamingAssets/aa.meta
+/[Aa]ssets/[Ss]treamingAssets/aa/*
+
 Assets/Plugins/
+Assets/Plugins.meta
+
+Assets/Demigiant/
+Assets/Demigiant.meta
 Assets/Resources/
 Assets/Resources.meta
-Assets/Plugins.meta
-ProjectSettings/
-Assets/Demigiant.meta

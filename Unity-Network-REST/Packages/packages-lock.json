@@ -174,10 +174,12 @@
       }
     },
     "extensions.unity.base": {
-      "version": "1.4.9",
+      "version": "1.5.0",
       "depth": 0,
       "source": "registry",
-      "dependencies": {},
+      "dependencies": {
+        "com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts"
+      },
       "url": "https://registry.npmjs.org"
     },
     "com.unity.modules.ai": {
