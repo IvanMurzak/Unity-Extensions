@@ -22,9 +22,9 @@ When NPM repository added, you may optionally add all extensions from the list b
 
 ## Unity-Extensions
 <pre><code>{
-    "dependencies": {
-        "extensions.unity.base": "1.5.0"
-    }
+	"dependencies": {
+		"extensions.unity.base": "1.5.0"
+	}
 }
 </code></pre>
 
