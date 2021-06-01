@@ -1,3 +1,2 @@
 cd Assets/_PackageRoot
-npm publish
-pause
+npm adduser
