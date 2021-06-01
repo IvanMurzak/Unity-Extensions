@@ -30,9 +30,9 @@ When NPM repository added, you may optionally add all extensions from the list b
 
 ## Unity-UI-Extensions
 <pre><code>{
-    "dependencies": {
-        "extensions.unity.ui": "1.2.2"
-    }
+	"dependencies": {
+		"extensions.unity.ui": "1.2.2"
+	}
 }
 </code></pre>
 
