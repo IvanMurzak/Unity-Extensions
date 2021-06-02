@@ -1,0 +1,19 @@
+{
+    "name": "Extensions.Unity.Network",
+    "rootNamespace": "",
+    "references": [
+        "UniRx",
+        "UniTask",
+        "Extensions.Unity",
+        "Zenject"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
