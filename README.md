@@ -53,6 +53,7 @@ When NPM repository added, you may optionally add all extensions from the list b
 </code></pre>
 
 ## Shapes RectTransform
+[![Shapes RectTransform demo](https://i.imgur.com/j3Obt4J.mp4)]
 <pre><code>{
   "dependencies": {
     "extensions.unity.shapes.recttransform": "1.0.0"
