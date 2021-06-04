@@ -52,13 +52,22 @@ When NPM repository added, you may optionally add all extensions from the list b
 }
 </code></pre>
 
+## Shapes RectTransform
+<pre><code>{
+  "dependencies": {
+    "extensions.unity.shapes.recttransform": "1.0.0"
+  }
+}
+</code></pre>
+
 ## Example - All Extensions included
 <pre><code>{
   "dependencies": {
     "extensions.unity.base": "1.5.0",
     "extensions.unity.ui": "1.2.2",
     "extensions.unity.network": "1.0.1",
-    "extensions.unity.unirx": "1.1.3"
+    "extensions.unity.unirx": "1.1.3",	
+    "extensions.unity.shapes.recttransform": "1.0.0"
   },
   "scopedRegistries": [
     {
