@@ -1,5 +1,5 @@
 {
-    "name": "Shapes.Extensions",
+    "name": "Shapes.RectTransform",
     "rootNamespace": "",
     "references": [
         "ShapesRuntime"

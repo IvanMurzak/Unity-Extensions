@@ -1,10 +1,10 @@
 {
-    "name": "extensions.unity.shapes",
-    "displayName": "Shapes Extensions",
+    "name": "extensions.unity.shapes.recttransform",
+    "displayName": "Shapes RectTransform",
 	"author": { "name": "Ivan Murzak", "url": "https://github.com/IvanMurzak" },
     "version": "1.0.0",
     "unity": "2019.2",
-    "description": "Shapes plugin is great but needs more helpful classes like Bezier curve and fitting to RectTransform size",
+    "description": "Shapes combine with RectTransform. Saving Aspect Ratio and two modes: Fit and Fill",
 	"dependencies": {
       
     },
