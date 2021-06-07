@@ -1,7 +1,7 @@
 using UnityEngine;
 using Shapes;
 
-[ExecuteInEditMode]
+[ExecuteAlways]
 [AddComponentMenu("Shapes/PolylineRectTransform")]
 [RequireComponent(typeof(Polyline))]
 public class PolylineRectTransform : UIBehaviourShape<Polyline>
@@ -19,10 +19,18 @@ public class PolylineRectTransform : UIBehaviourShape<Polyline>
         var rtCenter = rtPivot * rtSize;
 
         var bounds = ignoreThickness ? polyline.GetBounds() : GetBoundsWithThickness(polyline);
+        if (bounds.size.x <= 0 ||
+            bounds.size.y <= 0 ||
+            bounds.size.x == float.NaN ||
+            bounds.size.y == float.NaN ||
+            rtSize.x < 0 ||
+            rtSize.y < 0)
+            return;
+
         var scaleBy = new Vector2
         (
-            bounds.size.x == 0 ? 0 : rtSize.x / bounds.size.x,
-            bounds.size.y == 0 ? 0 : rtSize.y / bounds.size.y
+            rtSize.x == 0 ? ScaleByWhenRectSizeIsZero : rtSize.x / bounds.size.x,
+            rtSize.y == 0 ? ScaleByWhenRectSizeIsZero : rtSize.y / bounds.size.y
         );
 
         if (saveAspectRatio && scaleBy.x != scaleBy.y)
@@ -47,8 +55,8 @@ public class PolylineRectTransform : UIBehaviourShape<Polyline>
         Vector3 max = Vector3.one * float.MinValue;
         foreach (var pt in polyline.points)
         {
-            min = Vector3.Min(min, pt.point - Vector3.one * polyline.Thickness * pt.thickness);
-            max = Vector3.Max(max, pt.point + Vector3.one * polyline.Thickness * pt.thickness);
+            min = Vector3.Min(min, pt.point - Vector3.one * (polyline.Thickness * pt.thickness));
+            max = Vector3.Max(max, pt.point + Vector3.one * (polyline.Thickness * pt.thickness));
         }
 
         if (polyline.Geometry == PolylineGeometry.Flat2D)

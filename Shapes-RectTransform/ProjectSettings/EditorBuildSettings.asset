@@ -5,4 +5,5 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes: []
-  m_configObjects: {}
+  m_configObjects:
+    xr.sdk.mock-hmd.settings: {fileID: 11400000, guid: f7e5ee6a3d30ce84584e308248221eed, type: 2}

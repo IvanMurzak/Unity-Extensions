@@ -1,15 +1,13 @@
 using UnityEngine;
 using Shapes;
 
-[ExecuteInEditMode]
+[ExecuteAlways]
 [AddComponentMenu("Shapes/RegularPolygonRectTransform")]
-public class RegularPolygonRectTransform : UIBehaviourShape<RegularPolygon>
+public class RegularPolygonRectTransform : UIBehaviourShapeNested<RegularPolygon>
 {
     [Header("'Rectangle' component has to be a children!", order = 0)]
     [Header("", order = 2)]
     public Mode mode;
-
-    protected override RegularPolygon GetTargetComponent() => GetComponentInChildren<RegularPolygon>();
 
     public override void Execute(RegularPolygon regularPolygon, RectTransform rectTransform)
     {

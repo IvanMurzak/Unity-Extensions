@@ -1,7 +1,7 @@
 using UnityEngine;
 using Shapes;
 
-[ExecuteInEditMode]
+[ExecuteAlways]
 [AddComponentMenu("Shapes/QuadRectTransform")]
 [RequireComponent(typeof(Quad))]
 public class QuadFitRectTransform : UIBehaviourShape<Quad>
@@ -18,10 +18,18 @@ public class QuadFitRectTransform : UIBehaviourShape<Quad>
         var rtCenter = rtPivot * rtSize;
 
         var bounds = quad.GetBounds();
+        if (bounds.size.x <= 0 ||
+            bounds.size.y <= 0 ||
+            bounds.size.x == float.NaN ||
+            bounds.size.y == float.NaN ||
+            rtSize.x < 0 ||
+            rtSize.y < 0)
+            return;
+
         var scaleBy = new Vector2
         (
-            bounds.size.x == 0 ? 0 : rtSize.x / bounds.size.x,
-            bounds.size.y == 0 ? 0 : rtSize.y / bounds.size.y
+            rtSize.x == 0 ? ScaleByWhenRectSizeIsZero : rtSize.x / bounds.size.x,
+            rtSize.y == 0 ? ScaleByWhenRectSizeIsZero : rtSize.y / bounds.size.y
         );
 
         if (saveAspectRatio && scaleBy.x != scaleBy.y)

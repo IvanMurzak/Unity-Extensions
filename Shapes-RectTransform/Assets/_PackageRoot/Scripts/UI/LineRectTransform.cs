@@ -1,7 +1,7 @@
 using UnityEngine;
 using Shapes;
 
-[ExecuteInEditMode]
+[ExecuteAlways]
 [AddComponentMenu("Shapes/LineRectTransform")]
 [RequireComponent(typeof(Line))]
 public class LineRectTransform : UIBehaviourShape<Line>

@@ -1,10 +1,16 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[ExecuteInEditMode]
+[ExecuteAlways]
 public abstract class UIBehaviourShape<T> : UIBehaviour where T : Component
 {
+    protected static float ScaleByWhenRectSizeIsZero = 1f;
+
     protected virtual T GetTargetComponent() => GetComponent<T>();
+
+    private int lastFrameCount = -1;
 
     private T target;
     protected T Target
@@ -26,25 +32,48 @@ public abstract class UIBehaviourShape<T> : UIBehaviour where T : Component
             return rectTransform;
         }
     }
-    protected override void Awake()
+
+    private IEnumerator ExecuteAfterFrame()
+	{
+        yield return new WaitForEndOfFrame();
+        if (Target != null)
+        {
+            Execute(Target, RectTransform);
+        }
+    }
+    private void ExecuteInternal()
     {
-        base.Awake();
-        Execute(Target, RectTransform);
+        if (!gameObject.activeInHierarchy)
+            return;
+
+        if (Time.frameCount != lastFrameCount)
+        {
+            lastFrameCount = Time.frameCount;
+            if (Target != null)
+            {
+                Execute(Target, RectTransform);
+            }
+        }
+        else
+		{
+            StartCoroutine(ExecuteAfterFrame());
+		}
     }
 #if UNITY_EDITOR
     protected override void OnValidate()
 	{
 		base.OnValidate();
-        Execute(Target, RectTransform);
+        ExecuteInternal();
     }
 #endif
-    protected override void OnRectTransformDimensionsChange()
+
+	protected override void OnRectTransformDimensionsChange()
     {
         base.OnRectTransformDimensionsChange();
-        Execute(Target, RectTransform);
+        ExecuteInternal();
     }
 
-    protected virtual Vector2 CorrectRatio(Vector2 scaleBy, Bounds bounds, Mode mode)
+	protected virtual Vector2 CorrectRatio(Vector2 scaleBy, Bounds bounds, Mode mode)
     {
         var ratio = bounds.size.x / bounds.size.y;
 

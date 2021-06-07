@@ -30,7 +30,21 @@ public abstract class Request<T>
 	public		abstract	string							RESTMethod						{ get; }
 
 	protected	virtual		Dictionary<string, string>		Headers							=> null;
-	public		virtual		string							RequestURL						=> $"{rootEndpoint}/{Endpoint}";
+	public		virtual		string							RequestURL
+	{
+		get
+		{
+			var endpoint = Endpoint;
+			if (endpoint?.StartsWith("/") ?? false)
+				endpoint = endpoint.Substring(1, endpoint.Length - 1);
+
+			var tRootEndPoint = rootEndpoint;
+			if (tRootEndPoint.EndsWith("/"))
+				tRootEndPoint = tRootEndPoint.Substring(0, tRootEndPoint.Length - 1);
+
+			return $"{tRootEndPoint}/{endpoint}";
+		}
+	}
 
 	public					UnityWebRequest					LastUnityRequest				{ get; private set; }
 	public					string							ResponseRawData					{ get; protected set; } = null;

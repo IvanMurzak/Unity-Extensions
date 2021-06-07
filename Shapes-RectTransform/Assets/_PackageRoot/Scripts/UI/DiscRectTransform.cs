@@ -1,15 +1,13 @@
 using UnityEngine;
 using Shapes;
 
-[ExecuteInEditMode]
+[ExecuteAlways]
 [AddComponentMenu("Shapes/DiscRectTransform")]
-public class DiscRectTransform : UIBehaviourShape<Disc>
+public class DiscRectTransform : UIBehaviourShapeNested<Disc>
 {
     [Header("'Rectangle' component has to be a children!", order = 0)]
     [Header("", order = 2)]
     public Mode mode;
-
-    protected override Disc GetTargetComponent() => GetComponentInChildren<Disc>();
 
     public override void Execute(Disc disc, RectTransform rectTransform)
     {
