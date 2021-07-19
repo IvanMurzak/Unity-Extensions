@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine.Networking;
-using UniRx;
 using System.Text;
 using Newtonsoft.Json;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UniRx;
+using Cysharp;
+using Cysharp.Threading;
 using Cysharp.Threading.Tasks;
 
 public abstract class Request<T>
@@ -89,15 +91,17 @@ public abstract class Request<T>
 
 	public		async		UniTask							SendRequest						()
 	{
+		bool success = true;
 		UnityWebRequest unityRequest = null;
 		try
 		{
 			unityRequest = CreateUnityWebRequest(RequestURL);
 
 			await PrepeareRequest(unityRequest);
-			await unityRequest.SendWebRequest();			
+			await unityRequest.SendWebRequest()
+				.AsObservable(Progress.CreateOnlyValueChanged<float>(ProcessProgress));
 		}
-		catch (Exception e) { }
+		catch (Exception e) { success = false; }
 		finally
 		{
 			try
@@ -119,8 +123,10 @@ public abstract class Request<T>
 			}
 			catch (Exception e2)
 			{
+				success = false;
 				DebugFormat.LogException<Request<T>>(e2);
 			}
+			Events.SendComplete(success);
 		}
 	}
 	public					Request<T>						SubscribeOnSuccess				(Action<T> action, Component component = null)
@@ -150,6 +156,18 @@ public abstract class Request<T>
 	public					Request<T>						SubscribeOnNetworkError			(Action<NetworkError> action, Component component = null)
 	{
 		var disaposables = Events.OnNetworkError.Subscribe(action);
+		if (component != null) disaposables.AddTo(component);
+		return this;
+	}
+	public					Request<T>						SubscribeOnProgress				(Action<float> action, Component component = null)
+	{
+		var disaposables = Events.OnProgress.Subscribe(action);
+		if (component != null) disaposables.AddTo(component);
+		return this;
+	}
+	public					Request<T>						SubscribeOnComplete				(Action<bool> action, Component component = null)
+	{
+		var disaposables = Events.OnComplete.Subscribe(action);
 		if (component != null) disaposables.AddTo(component);
 		return this;
 	}
@@ -197,6 +215,10 @@ public abstract class Request<T>
 		}
 		errorData.httpResponseCode = unityRequest.responseCode;
 		Events.SendHttpError(errorData);
+	}
+	protected	virtual		void							ProcessProgress					(float progress)
+	{
+		Events.SendProgress(progress);
 	}
 	protected	virtual		string							GetJSON							(UnityWebRequest unityRequest)
 	{

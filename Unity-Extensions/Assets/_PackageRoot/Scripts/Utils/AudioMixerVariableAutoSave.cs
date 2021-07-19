@@ -7,7 +7,7 @@ public class AudioMixerVariableAutoSave : AudioMixerVariable
 	public AudioMixerVariableAutoSave(AudioMixer audioMixer, string variableName, float defaultValue = 0.75f, float min = 0, float max = 1) : base(audioMixer, variableName, min, max)
 	{
 		masterVolumePrefs = new PlayerPrefsExFloat("save_" + variableName, defaultValue);
-		base.Value = masterVolumePrefs.Value;
+		base.Value = SavedValue;
 	}
 
 	public override float Value

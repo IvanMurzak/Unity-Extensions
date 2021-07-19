@@ -16,19 +16,48 @@ public static class ExtensionImage
         float width;
         float height;
 
-        rectTransform   = rectTransform ?? (RectTransform)image.rectTransform.parent;
-        sprite          = sprite ?? image.sprite;
+        rectTransform       = rectTransform ?? (RectTransform)image.rectTransform.parent;
+        sprite              = sprite ?? image.sprite;
 
-        var size = sprite.textureRect.size;
-        if (size.y > size.x)
+        var size            = sprite.textureRect.size;
+        var aspectRatio     = size.x / size.y;
+        var aspectRatioRect = rectTransform.rect.size.x / rectTransform.rect.size.y;
+
+        if (aspectRatio < aspectRatioRect)
         {
-            var reversedAspectRatio = size.y / size.x;
             width = rectTransform.rect.size.x + oversize.x * 2;
-            height = width * reversedAspectRatio;
+            height = width / aspectRatio;
         }
         else
         {
-            var aspectRatio = size.x / size.y;
+            height = rectTransform.rect.size.y + oversize.y * 2;
+            width = height * aspectRatio;
+        }
+        image.rectTransform.SetWidth(width);
+        image.rectTransform.SetHeight(height);
+
+        return image;
+    }
+    public static Image FitInto(this Image image) => FitInto(image, Vector2.zero);
+    public static Image FitInto(this Image image, Vector2 oversize, RectTransform rectTransform = null, Sprite sprite = null)
+    {
+        float width;
+        float height;
+
+        rectTransform       = rectTransform ?? (RectTransform)image.rectTransform.parent;
+        sprite              = sprite ?? image.sprite;
+
+        var size            = sprite.textureRect.size;
+        var aspectRatio     = size.x / size.y;
+        var aspectRatioRect = rectTransform.rect.size.x / rectTransform.rect.size.y;
+
+        if (aspectRatio > aspectRatioRect)
+        {
+            width = rectTransform.rect.size.x + oversize.x * 2;
+            height = width / aspectRatio;
+        }
+        else
+        {
             height = rectTransform.rect.size.y + oversize.y * 2;
             width = height * aspectRatio;
         }
