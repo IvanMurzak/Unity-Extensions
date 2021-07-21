@@ -55,8 +55,8 @@ public class PolylineRectTransform : UIBehaviourShape<Polyline>
         Vector3 max = Vector3.one * float.MinValue;
         foreach (var pt in polyline.points)
         {
-            min = Vector3.Min(min, pt.point - Vector3.one * (polyline.Thickness * pt.thickness));
-            max = Vector3.Max(max, pt.point + Vector3.one * (polyline.Thickness * pt.thickness));
+            min = Vector3.Min(min, pt.point - Vector3.one * (polyline.Thickness * pt.thickness) / 2f);
+            max = Vector3.Max(max, pt.point + Vector3.one * (polyline.Thickness * pt.thickness) / 2f);
         }
 
         if (polyline.Geometry == PolylineGeometry.Flat2D)
