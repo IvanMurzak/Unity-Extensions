@@ -1,18 +1,18 @@
 {
   "dependencies": {
     "com.cysharp.unitask": {
-      "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+      "version": "2.2.5",
       "depth": 0,
-      "source": "git",
+      "source": "registry",
       "dependencies": {},
-      "hash": "60bfbae787b1aade3b7a2504999031d96996d7dd"
+      "url": "https://registry.npmjs.org"
     },
     "com.neuecc.unirx": {
-      "version": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts",
+      "version": "7.1.0",
       "depth": 0,
-      "source": "git",
+      "source": "registry",
       "dependencies": {},
-      "hash": "284d5c50d3f1ddd9fa7df3d382ea904732a9c2ff"
+      "url": "https://registry.npmjs.org"
     },
     "com.unity.2d.animation": {
       "version": "5.0.5",
@@ -174,13 +174,20 @@
       }
     },
     "extensions.unity.base": {
-      "version": "1.5.1",
+      "version": "1.7.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts"
+        "com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts#7.1.0"
       },
       "url": "https://registry.npmjs.org"
+    },
+    "jillejr.newtonsoft.json-for-unity": {
+      "version": "12.0.101",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://npm.cloudsmith.io/jillejr/newtonsoft-json-for-unity"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

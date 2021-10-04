@@ -1,14 +1,17 @@
 ﻿using System.Collections.Generic;
 using UnityEngine.Networking;
 
-public abstract class RequestGet<T> : Request<T>
+namespace Network.Extension
 {
-	public override string RESTMethod => UnityWebRequest.kHttpVerbGET;
-
-	public RequestGet(NetworkSO network) : base(network) { }
-
-	protected override UnityWebRequest CreateUnityWebRequest(string endpoint)
+	public abstract class RequestGet<T> : Request<T>
 	{
-		return UnityWebRequest.Get(endpoint);
+		public override string RESTMethod => UnityWebRequest.kHttpVerbGET;
+
+		public RequestGet(NetworkSO network) : base(network) { }
+
+		protected override UnityWebRequest CreateUnityWebRequest(string endpoint)
+		{
+			return UnityWebRequest.Get(endpoint);
+		}
 	}
 }

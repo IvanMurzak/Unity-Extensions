@@ -1,13 +1,16 @@
 ﻿using UnityEngine.Networking;
 
-public abstract class RequestDelete<T> : Request<T>
+namespace Network.Extension
 {
-	public override string RESTMethod => UnityWebRequest.kHttpVerbDELETE;
-
-	public RequestDelete(NetworkSO network) : base(network) { }
-
-	protected override UnityWebRequest CreateUnityWebRequest(string endpoint)
+	public abstract class RequestDelete<T> : Request<T>
 	{
-		return UnityWebRequest.Delete(endpoint);
+		public override string RESTMethod => UnityWebRequest.kHttpVerbDELETE;
+
+		public RequestDelete(NetworkSO network) : base(network) { }
+
+		protected override UnityWebRequest CreateUnityWebRequest(string endpoint)
+		{
+			return UnityWebRequest.Delete(endpoint);
+		}
 	}
 }

@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "com.neuecc.unirx": {
-      "version": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts",
+      "version": "7.1.0",
       "depth": 0,
-      "source": "git",
+      "source": "registry",
       "dependencies": {},
-      "hash": "284d5c50d3f1ddd9fa7df3d382ea904732a9c2ff"
+      "url": "https://registry.npmjs.org"
     },
     "com.unity.ext.nunit": {
       "version": "1.0.6",
@@ -15,7 +15,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.9",
+      "version": "2.0.11",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -24,7 +24,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
-      "version": "1.1.26",
+      "version": "1.1.29",
       "depth": 0,
       "source": "registry",
       "dependencies": {

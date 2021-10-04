@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts",
-    "com.unity.ide.visualstudio": "2.0.9",
-    "com.unity.test-framework": "1.1.26",
+    "com.neuecc.unirx": "7.1.0",
+    "com.unity.ide.visualstudio": "2.0.11",
+    "com.unity.test-framework": "1.1.29",
     "com.unity.ugui": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
@@ -35,5 +35,22 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  }
+  },
+  "scopedRegistries": [
+    {
+      "name": "Unity Extensions",
+      "url": "https://registry.npmjs.org",
+      "scopes": [
+        "extensions.unity"
+      ]
+    },
+    {
+      "name": "NPM",
+      "url": "https://registry.npmjs.org",
+      "scopes": [
+        "com.cysharp",
+        "com.neuecc"
+      ]
+    }
+  ]
 }

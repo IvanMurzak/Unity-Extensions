@@ -19,6 +19,11 @@ public abstract class SaverScriptableObject<T> : BaseScriptableObject, ISavable,
 	[HorizontalGroup("Managering Data"), Button(ButtonSizes.Medium)]
 	public					T			Load()
 	{
+		if (saver == null)
+		{
+			DebugFormat.Log(this, $"Saver had not been initialized. Doing it automaticly.");
+			saver = new Saver<T>();
+		}
 		Data = PrepareData(saver.Load());
 		OnDataLoaded(Data);
 		return Data;

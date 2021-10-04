@@ -1,19 +1,27 @@
 {
-    "name": "extensions.unity.shapes.recttransform",
-    "displayName": "Shapes RectTransform",
-	"author": { "name": "Ivan Murzak", "url": "https://github.com/IvanMurzak" },
-    "version": "1.0.1",
-    "unity": "2019.2",
-    "description": "Shapes combine with RectTransform. Saving Aspect Ratio and two modes: Fit and Fill",
-	"dependencies": {
-      
-    },
-	"scopedRegistries": [
+  "name": "extensions.unity.shapes.recttransform",
+  "displayName": "Shapes RectTransform",
+  "author": { "name": "Ivan Murzak", "url": "https://github.com/IvanMurzak" },
+  "version": "1.0.1",
+  "unity": "2019.2",
+  "description": "Shapes combine with RectTransform. Saving Aspect Ratio and two modes: Fit and Fill",
+  "dependencies": {
+    
+  },
+  "scopedRegistries": [
     {
       "name": "Unity Extensions",
       "url": "https://registry.npmjs.org",
       "scopes": [
         "extensions.unity"
+      ]
+    },
+    {
+      "name": "NPM",
+      "url": "https://registry.npmjs.org",
+      "scopes": [
+    	"com.cysharp",
+		"com.neuecc"
       ]
     }
   ]

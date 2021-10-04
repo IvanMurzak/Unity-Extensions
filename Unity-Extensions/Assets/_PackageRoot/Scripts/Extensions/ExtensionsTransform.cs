@@ -199,6 +199,20 @@ public static class ExtensionsTransform
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
+    public static Transform DestroyChildren(this Transform transform)
+    {
+        while (transform.childCount > 0)
+            GameObject.Destroy(transform.GetChild(0).gameObject);
+        return transform;
+    }
+
+    public static Transform DestroyChildrenImmediate(this Transform transform)
+    {
+        while (transform.childCount > 0)
+            GameObject.DestroyImmediate(transform.GetChild(0).gameObject);
+        return transform;
+    }
+
     static void SetChildLayersHelper(Transform transform, int layer, bool recursive)
     {
         foreach (Transform child in transform)

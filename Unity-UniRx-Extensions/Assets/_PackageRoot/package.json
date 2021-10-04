@@ -1,20 +1,28 @@
 {
-    "name": "extensions.unity.unirx",
-    "displayName": "Unity UniRx extensions",
-	"author": { "name": "Ivan Murzak", "url": "https://github.com/IvanMurzak" },
-    "version": "1.1.5",
-    "unity": "2019.2",
-    "description": "Helper classes for UniRx",
-	"dependencies": {
-      "com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts#7.1.0"
+  "name": "extensions.unity.unirx",
+  "displayName": "Unity UniRx extensions",
+  "author": { "name": "Ivan Murzak", "url": "https://github.com/IvanMurzak" },
+  "version": "1.1.6",
+  "unity": "2019.2",
+  "description": "Helper classes for UniRx",
+  "dependencies": {
+    "com.neuecc.unirx": "7.1.0"
+  },
+  "scopedRegistries": [
+    {
+ 	  "name": "Unity Extensions",
+ 	  "url": "https://registry.npmjs.org",
+ 	  "scopes": [
+ 	    "extensions.unity"
+ 	  ]
     },
-    "scopedRegistries": [
-      {
-        "name": "Unity Extensions",
-        "url": "https://registry.npmjs.org",
-        "scopes": [
-          "extensions.unity"
-        ]
-      }
-    ]
+    {
+      "name": "NPM",
+      "url": "https://registry.npmjs.org",
+      "scopes": [
+    	"com.cysharp",
+		"com.neuecc"
+      ]
+    }
+  ]
 }

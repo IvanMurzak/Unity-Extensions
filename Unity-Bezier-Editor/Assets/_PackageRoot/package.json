@@ -1,19 +1,27 @@
 {
-    "name": "extensions.unity.bezier.editor",
-    "displayName": "Unity Bezier Editor",
-	"author": { "name": "Ivan Murzak", "url": "https://github.com/IvanMurzak" },
-    "version": "1.0.0",
-    "unity": "2019.2",
-    "description": "User Interface for creating Bezier curve dummy in the Scene View in Unity Editor. Should be used for generating curves in any possible implementation way.",
-	"dependencies": {
-      
-    },
-	"scopedRegistries": [
+  "name": "extensions.unity.bezier.editor",
+  "displayName": "Unity Bezier Editor",
+  "author": { "name": "Ivan Murzak", "url": "https://github.com/IvanMurzak" },
+  "version": "1.0.0",
+  "unity": "2019.2",
+  "description": "User Interface for creating Bezier curve dummy in the Scene View in Unity Editor. Should be used for generating curves in any possible implementation way.",
+  "dependencies": {
+    
+  },
+  "scopedRegistries": [
     {
       "name": "Unity Extensions",
       "url": "https://registry.npmjs.org",
       "scopes": [
-        "extensions.unity"
+  	    "extensions.unity"
+      ]
+    },
+    {
+      "name": "NPM",
+      "url": "https://registry.npmjs.org",
+      "scopes": [
+    	"com.cysharp",
+		"com.neuecc"
       ]
     }
   ]

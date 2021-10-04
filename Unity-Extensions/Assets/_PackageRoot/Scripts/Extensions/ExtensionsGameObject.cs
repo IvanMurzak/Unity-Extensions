@@ -43,6 +43,32 @@ public static class ExtensionsGameObject
         if (component == null) component = gameObject.AddComponent<T>();
         return component;
     }
+    public static void SetLayer(this GameObject obj, string newLayer) => SetLayer(obj, LayerMask.NameToLayer(newLayer));
+    public static void SetLayer(this GameObject obj, int newLayer)
+    {
+        if (null == obj) return;
+        obj.layer = newLayer;
+
+        foreach (Transform child in obj.transform)
+        {
+            if (null == child)
+                continue;
+            child.gameObject.layer = newLayer;
+        }
+    }
+    public static void SetLayerRecursively(this GameObject obj, string newLayer) => SetLayerRecursively(obj, LayerMask.NameToLayer(newLayer));
+    public static void SetLayerRecursively(this GameObject obj, int newLayer)
+    {
+        if (null == obj) return;
+        obj.layer = newLayer;
+
+        foreach (Transform child in obj.transform)
+        {
+            if (null == child)
+                continue;
+            SetLayerRecursively(child.gameObject, newLayer);
+        }
+    }
 
     public static IDisposable Deactivate(this GameObject gameObject)
     {

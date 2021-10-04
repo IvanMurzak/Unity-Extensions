@@ -4,13 +4,18 @@ using UnityEngine.SceneManagement;
 
 public static class ExtensionsComponent
 {
-	public static bool IsWorldSpace(this Component compoennt)
+	public static bool IsWorldSpace(this Component original)
 	{
-		var canvas			= compoennt == null ? null : compoennt.GetComponentInParent<Canvas>();
-		var isWorldSpace	= compoennt != null && (canvas == null || canvas.renderMode == RenderMode.WorldSpace);
+		var canvas			= original == null ? null : original.GetComponentInParent<Canvas>();
+		var isWorldSpace	= original != null && (canvas == null || canvas.renderMode == RenderMode.WorldSpace);
 		return isWorldSpace;
 	}
-
+    public static T GetOrAddComponent<T>(this Component original) where T : Component
+    {
+        T component = original.gameObject.GetComponent<T>();
+        if (component == null) component = original.gameObject.AddComponent<T>();
+        return component;
+    }
     public static T CopyComponent<T>(this T original, GameObject destination) where T : Component
     {
         System.Type type = original.GetType();

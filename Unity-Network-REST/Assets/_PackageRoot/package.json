@@ -1,22 +1,38 @@
 {
-    "name": "extensions.unity.network",
-    "displayName": "Unity Network REST extension",
-	"author": { "name": "Ivan Murzak", "url": "https://github.com/IvanMurzak" },
-    "version": "1.1.1",
-    "unity": "2019.2",
-    "description": "Library for managering Network requests, especially REST API",
-	"dependencies": {
-      "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask#2.2.5",
-	  "com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts#7.1.0",
-	  "extensions.unity.base": "1.5.2"
-    },
-	"scopedRegistries": [
+  "name": "extensions.unity.network",
+  "displayName": "Unity Network REST extension",
+  "author": { "name": "Ivan Murzak", "url": "https://github.com/IvanMurzak" },
+  "version": "1.2.0",
+  "unity": "2019.2",
+  "description": "Library for managering Network requests, especially REST API",
+  "dependencies": {
+    "com.cysharp.unitask": "2.2.5",
+    "com.neuecc.unirx": "7.1.0",
+	"jillejr.newtonsoft.json-for-unity": "13.0.102",
+    "extensions.unity.base": "1.7.6"
+  },
+  "scopedRegistries": [
     {
       "name": "Unity Extensions",
       "url": "https://registry.npmjs.org",
       "scopes": [
-        "extensions.unity"
+    	"extensions.unity"
       ]
+    },
+    {
+      "name": "NPM",
+      "url": "https://registry.npmjs.org",
+      "scopes": [
+    	"com.cysharp",
+		"com.neuecc"
+      ]
+    },
+	{
+	  "name": "Packages from jillejr",
+      "url": "https://npm.cloudsmith.io/jillejr/newtonsoft-json-for-unity/",
+      "scopes": [
+	    "jillejr"
+	  ]
     }
   ]
 }
