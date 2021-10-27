@@ -2,14 +2,15 @@
   "name": "extensions.unity.network",
   "displayName": "Unity Network REST extension",
   "author": { "name": "Ivan Murzak", "url": "https://github.com/IvanMurzak" },
-  "version": "1.2.0",
+  "version": "1.3.2",
   "unity": "2019.2",
   "description": "Library for managering Network requests, especially REST API",
   "dependencies": {
     "com.cysharp.unitask": "2.2.5",
     "com.neuecc.unirx": "7.1.0",
 	"jillejr.newtonsoft.json-for-unity": "13.0.102",
-    "extensions.unity.base": "1.7.6"
+	"jillejr.newtonsoft.json-for-unity.converters": "1.3.0",
+    "extensions.unity.base": "1.8.19"
   },
   "scopedRegistries": [
     {

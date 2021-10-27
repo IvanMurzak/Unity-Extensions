@@ -12,6 +12,11 @@ using UniRx;
 public class Saver<T> : ISavable, ILoadable<T>
 {
 	#region static
+	public static void Init()
+	{
+		EncryptionUtils.Init();
+		var temp = PERSISTANT_DATA_PATH;
+	}
 	private static readonly string		PERSISTANT_DATA_PATH		= Application.persistentDataPath + "/Save";
 
 	public	static readonly	TaskFactory factory						= new TaskFactory(new LimitedConcurrencyLevelTaskScheduler(1));
@@ -27,13 +32,22 @@ public class Saver<T> : ISavable, ILoadable<T>
 
 	public static			void		Save						(T data, string path, string fileName)
 	{
+		Debug.Log($"Save:{FullPath(path, fileName)}");
 		Save(data, FullPath(path, fileName));
 	}
 	public static			void		Save						(T data, string fullPath)
 	{
-		Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
-		var bytes = SerializationUtility.SerializeValue(data, DataFormat.Binary);
-		File.WriteAllBytes(fullPath, EncryptionUtils.Encrypt(bytes));
+		Debug.Log($"Save:{fullPath}");
+		try
+		{
+			Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+			var bytes = SerializationUtility.SerializeValue(data, DataFormat.Binary);
+			File.WriteAllBytes(fullPath, EncryptionUtils.Encrypt(bytes));
+		}
+		catch (Exception e)
+		{
+			Debug.LogException(e);
+		}
 	}
 	public static			T			Load						(string path, string fileName)
 	{
@@ -41,8 +55,7 @@ public class Saver<T> : ISavable, ILoadable<T>
 	}
 	public	static			T			Load						(string fullPath)
 	{
-		// Debug.Log($"Full Path: {fullPath}");
-		// DebugFormat.Log<Saver<T>>($"Full Path: {fullPath}");
+		Debug.Log($"Load:{fullPath}");
 		T data;
 		if (!File.Exists(fullPath))
 		{
@@ -56,10 +69,8 @@ public class Saver<T> : ISavable, ILoadable<T>
 		}
 		catch(Exception e)
 		{
-			// DebugFormat.LogException<Saver<T>>(e);
 			data = default(T);
 		}
-		// DebugFormat.PrintObjectStructure(data);
 		return data;
 	}
 	public	static			void		Delete						(string fullPath)
@@ -71,7 +82,7 @@ public class Saver<T> : ISavable, ILoadable<T>
 	}
 	public	static			void		DeleteAllSaves				()
 	{
-		DebugFormat.Log<Saver<T>>($"path: {PERSISTANT_DATA_PATH}");
+		Debug.Log($"DeleteAllSaves at path: {PERSISTANT_DATA_PATH}");
 		if (Directory.Exists(PERSISTANT_DATA_PATH))
 			Directory.Delete(PERSISTANT_DATA_PATH, true);
 	}
@@ -82,34 +93,33 @@ public class Saver<T> : ISavable, ILoadable<T>
 	}
 #endregion
 
-	[NonSerialized] Subject<Unit> onSaveAsyncDelayed;
+																				CompositeDisposable disposable;
+																				CompositeDisposable Disposable => disposable ??= new CompositeDisposable();
 
-	[SerializeField, ShowInInspector, ReadOnly] private string path;
-	[SerializeField, ShowInInspector, ReadOnly] private string fileName;
+	[SerializeField, ShowInInspector, ReadOnly]							private string				path;
+	[SerializeField, ShowInInspector, ReadOnly]							private string				fileName;
 
-	[ShowInInspector, ReadOnly] float asyncDelayedSave = 1f;
+																		public	bool				Loaded { get; private set; } = false;
 
-	public bool Loaded { get; private set; } = false;
+	[BoxGroup("Data", false), NonSerialized, OdinSerialize, ReadOnly]	public	T					data;
+	[BoxGroup("Data", false), NonSerialized, OdinSerialize]				private T					_defaultData;
+																		public	T					DefaultData
+																		{
+																			private set => _defaultData = value;
+																			get
+																			{
+																				if (_defaultData != null && _defaultData is ICloneable)
+																				{
+																					return (T)((ICloneable)_defaultData).Clone();
+																				}
+																				else
+																				{
+																					return _defaultData;
+																				}
+																			}
+																		}
 
-	[BoxGroup("Data", false), NonSerialized, OdinSerialize, ReadOnly] public T data;
-	[BoxGroup("Data", false), NonSerialized, OdinSerialize] private T _defaultData;
-	public T	DefaultData
-	{
-		private set => _defaultData = value;
-		get
-		{
-			if (_defaultData != null && _defaultData is ICloneable)
-			{
-				return (T)((ICloneable)_defaultData).Clone();
-			}
-			else
-			{
-				return _defaultData;
-			}
-		}
-	}
-
-	[ShowInInspector, ReadOnly] private string fullPath => FullPath(path, fileName);
+	[ShowInInspector, ReadOnly]											private string				fullPath => FullPath(path, fileName);
 
 	[BoxGroup("Data", false), ButtonGroup("Data/Buttons2"), Button(ButtonSizes.Medium)]
 	public void CopyFromDefault	()
@@ -136,12 +146,16 @@ public class Saver<T> : ISavable, ILoadable<T>
 #endif
 	public		Saver()
 	{
+		Init();
 		DefaultData = Activator.CreateInstance<T>();
 	}
-    public		Saver			(string path, string fileName, float asyncDelayedSave = 1f) : this()
+    public		Saver			(string path, string fileName) : this()
     {
-        this.asyncDelayedSave = asyncDelayedSave;
         UpdatePath(path, fileName);
+	}
+	public		Saver			(string path, string fileName, T defaultData) : this(path, fileName)
+    {
+		this.DefaultData = defaultData;
 	}
     public void UpdatePath		(string path, string fileName)
     {
@@ -152,64 +166,56 @@ public class Saver<T> : ISavable, ILoadable<T>
     {
         return IsFileExists(path, fileName);
     }
-    public void Save			()
+
+    public async Task Save		(Action onComplete = null)
     {
-        Save(data, path, fileName);
+		Disposable.Clear();
+		await factory.StartNew(() => Save(data, path, fileName));
+		onComplete?.Invoke();
     }
-    public Task SaveAsync		(Action<Task> onComplete = null)
+	public void SaveDelayed(Action onComplete = null) => SaveDelayed(TimeSpan.FromSeconds(1), onComplete);
+	public void SaveDelayed(TimeSpan delay, Action onComplete = null)
     {
-		// DebugFormat.Log<Saver<T>>();
-        Task task = factory.StartNew(Save);
-        if (onComplete != null) task = task.ContinueWith(onComplete);
-        return task;
-    }
-    public void SaveAsyncDelayed()
-    {
-        if (onSaveAsyncDelayed == null)
-        {
-            onSaveAsyncDelayed = new Subject<Unit>();
-            onSaveAsyncDelayed.Throttle(TimeSpan.FromSeconds(asyncDelayedSave))
-                 .Subscribe(x => SaveAsync());
-            // TODO: dispose it somewhere
-        }
-        if (Application.isPlaying) onSaveAsyncDelayed.OnNext(Unit.Default);
+		Observable.Timer(delay, Scheduler.ThreadPool)
+			.First		()
+			.Subscribe	(async x => await Save(onComplete))
+			.AddTo		(Disposable);
     }
     public T	Load			()
 	{
 		if (DefaultData == null)
 		{
-			DebugFormat.LogError(this, $"Default data is null. path={FullPath(path, fileName)}");
+			Debug.LogError($"Default data is null. path={FullPath(path, fileName)}");
 		}
 		if (IsFileExists())
 		{
 			data = Load(path, fileName);
 			if (data == null)
 			{
-				DebugFormat.LogError(this, $"Loaded data is null. path={FullPath(path, fileName)}");
+				Debug.LogError($"Loaded data is null. path={FullPath(path, fileName)}");
 				data = DefaultData;
-			}			
+			}
 		}
 		else
 		{
+			Debug.LogError($"Loading default data. path={FullPath(path, fileName)}");
 			data = DefaultData;
 		}
 		Loaded = true;
 		return data;
     }
-    public Task LoadAsync(Action<Task> onComplete = null)
+    public async Task<T> LoadAsync(Action<T> onComplete = null)
     {
-        Task task = factory.StartNew(Load);
-        if (onComplete != null) task = task.ContinueWith(onComplete);
-        return task;
+        var result = await factory.StartNew(Load);
+		onComplete?.Invoke(result);
+		return result;
     }
-
-
 }
 
 public interface ISavable
 {
     [Button, HorizontalGroup("Save Buttons")]
-    void Save();
+	Task Save(Action onComplete = null);
 }
 public interface ILoadable<T>
 {

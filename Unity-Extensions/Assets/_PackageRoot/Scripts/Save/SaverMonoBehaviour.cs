@@ -26,8 +26,8 @@ public abstract class SaverMonoBehaviour<T> : BaseMonoBehaviour, IPreBuildSetup
 	protected			T							Data					{ get; set; }
 	protected			T							DefaultData				=> saver.DefaultData;
 	
-	protected virtual	string						SaverPath				=> "Savers";
-	protected virtual	string						SaverFileName			=> this.FullName('_');
+	protected abstract	string						SaverPath				{ get; }
+	protected abstract	string						SaverFileName			{ get; }
 
 	private				bool						HasSaver				=> saver != null;
 
@@ -54,31 +54,25 @@ public abstract class SaverMonoBehaviour<T> : BaseMonoBehaviour, IPreBuildSetup
 		});
 	}
 	[HorizontalGroup("Managering Data"), Button(ButtonSizes.Medium)]
-	public void Save()
+	public async Task Save(Action onComplete = null)
 	{
 		if (saver == null) DebugFormat.LogError(this, "Saver is not initialized!");
 		saver.data = PrepeareDataBeforeSave(Data);
-		saver.Save();
+		await saver.Save(onComplete);
 		onSaveStarted.OnNext(Data);
 	}
-	public void SaveAsync()
+	public void SaveDelayed(TimeSpan delay, Action onComplete = null)
 	{
 		if (saver == null) DebugFormat.LogError(this, "Saver is not initialized!");
 		saver.data = PrepeareDataBeforeSave(Data);
-		saver.SaveAsync();
-		onSaveStarted.OnNext(Data);
-	}
-	public void SaveAsyncDelayed()
-	{
-		if (saver == null) DebugFormat.LogError(this, "Saver is not initialized!");
-		saver.data = PrepeareDataBeforeSave(Data);
-		saver.SaveAsyncDelayed();
+		saver.SaveDelayed(delay, onComplete);
 		onSaveStarted.OnNext(Data);
 	}
 
 
 	protected virtual void Start()
     {
+		EncryptionUtils.Init();
 		PreBuildSetup();
 
 		loadingDataListeners = GetComponents<ISaverOnLoadedListener<T>>();
@@ -106,7 +100,7 @@ public abstract class SaverMonoBehaviour<T> : BaseMonoBehaviour, IPreBuildSetup
 		Data = data;
         saver.data = Data;
 		onDataModified.OnNext(data);
-		saver.SaveAsyncDelayed();
+		saver.SaveDelayed();
     }
 
 
@@ -122,14 +116,14 @@ public abstract class SaverMonoBehaviour<T> : BaseMonoBehaviour, IPreBuildSetup
 		else				saver.UpdatePath(SaverPath, SaverFileName);
 		// PrefabUtils.EditorApplyPrefabChanges(this);
 	}
-	private void OnApplicationPause(bool pauseStatus)
+	private async void OnApplicationPause(bool pauseStatus)
 	{
-		if (pauseStatus)	Save();
+		if (pauseStatus) await Save();
 	}
 #if UNITY_EDITOR
-	private void OnDisable()
+	private async void OnDisable()
 	{
-		Save();
+		await Save();
 	}
 #endif
 }

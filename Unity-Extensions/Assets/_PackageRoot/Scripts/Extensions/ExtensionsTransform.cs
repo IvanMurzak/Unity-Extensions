@@ -201,8 +201,8 @@ public static class ExtensionsTransform
 
     public static Transform DestroyChildren(this Transform transform)
     {
-        while (transform.childCount > 0)
-            GameObject.Destroy(transform.GetChild(0).gameObject);
+        for(int i = 0; i < transform.childCount; i++)
+            GameObject.Destroy(transform.GetChild(i).gameObject);
         return transform;
     }
 

@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
@@ -75,7 +76,7 @@ namespace Network.Extension
 			Data.accessToken	= accessToken; // TODO: Data could be null should fix it!
 			Data.refreshToken	= refreshToken;
 			AccessTokenHeader	= Data.accessToken;
-			SaveAsync();
+			SaveDelayed(TimeSpan.FromSeconds(1));
 		}
 		public async			UniTask<Request<T>>		SendRequest<T>		(Request<T> request)
 		{

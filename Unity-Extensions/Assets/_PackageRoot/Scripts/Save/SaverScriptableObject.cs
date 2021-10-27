@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Threading.Tasks;
+using System;
 
 public abstract class SaverScriptableObject<T> : BaseScriptableObject, ISavable, ILoadable<T>
 {
@@ -30,24 +31,22 @@ public abstract class SaverScriptableObject<T> : BaseScriptableObject, ISavable,
 	}
 	public					Task		LoadAsync()				=> saver.LoadAsync(task => OnDataLoaded(Data = PrepareData(saver.data)));
 	[HorizontalGroup("Managering Data"), Button(ButtonSizes.Medium)]
-	public		virtual		void		Save()
+	public		virtual		async Task	Save(Action onComplete = null)
 	{
 		saver.data = OnDataSave(Data);
-		saver.Save();
+		await saver.Save(onComplete);
 	}
-	public		virtual		void		SaveAsync()
+	public		virtual		void		SaveDelayed(TimeSpan delay, Action onComplete = null)
 	{
 		saver.data = OnDataSave(Data);
-		saver.SaveAsync();
-	}
-	public		virtual		void		SaveAsyncDelayed()
-	{
-		saver.data = OnDataSave(Data);
-		saver.SaveAsyncDelayed();
+		saver.SaveDelayed(delay, onComplete);
 	}
 
-
-	protected	virtual		void		OnEnable()				=> Data = Load();
+	protected	virtual		void		OnEnable()
+	{
+		EncryptionUtils.Init();
+		Data = Load();
+	}
 	protected	virtual		T			PrepareData(T data)		=> data;
 	protected	abstract	void		OnDataLoaded(T data);
 	protected	virtual		T			OnDataSave(T data)		=> data;
