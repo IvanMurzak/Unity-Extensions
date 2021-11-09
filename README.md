@@ -23,15 +23,7 @@ When NPM repository added, you may optionally add all extensions from the list b
 ## Unity-Extensions
 <pre><code>{
   "dependencies": {
-    "extensions.unity.base": "1.5.0"
-  }
-}
-</code></pre>
-
-## Unity-UI-Extensions
-<pre><code>{
-  "dependencies": {
-    "extensions.unity.ui": "1.2.2"
+    "extensions.unity.base": "1.9.0"
   }
 }
 </code></pre>
@@ -39,7 +31,15 @@ When NPM repository added, you may optionally add all extensions from the list b
 ## Unity Network REST extension
 <pre><code>{
   "dependencies": {
-    "extensions.unity.network": "1.0.1"
+    "extensions.unity.network": "1.3.3"
+  }
+}
+</code></pre>
+
+## Unity IAP extension
+<pre><code>{
+  "dependencies": {
+    "extensions.unity.iap.store": "2.0.6"
   }
 }
 </code></pre>
@@ -47,7 +47,15 @@ When NPM repository added, you may optionally add all extensions from the list b
 ## Unity UniRx extensions
 <pre><code>{
   "dependencies": {
-    "extensions.unity.unirx": "1.1.3"
+    "extensions.unity.unirx": "1.1.5"
+  }
+}
+</code></pre>
+
+## Unity-UI-Extensions
+<pre><code>{
+  "dependencies": {
+    "extensions.unity.ui": "1.3.2"
   }
 }
 </code></pre>
@@ -64,10 +72,11 @@ When NPM repository added, you may optionally add all extensions from the list b
 ## Example - All Extensions included
 <pre><code>{
   "dependencies": {
-    "extensions.unity.base": "1.5.0",
-    "extensions.unity.ui": "1.2.2",
-    "extensions.unity.network": "1.0.1",
-    "extensions.unity.unirx": "1.1.3",	
+    "extensions.unity.base": "1.9.0",
+    "extensions.unity.network": "1.3.3",
+    "extensions.unity.iap.store": "2.0.6",
+    "extensions.unity.ui": "1.3.2",
+    "extensions.unity.unirx": "1.1.5",	
     "extensions.unity.shapes.recttransform": "1.0.1"
   },
   "scopedRegistries": [
