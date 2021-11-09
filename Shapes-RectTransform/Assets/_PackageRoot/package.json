@@ -2,7 +2,7 @@
   "name": "extensions.unity.shapes.recttransform",
   "displayName": "Shapes RectTransform",
   "author": { "name": "Ivan Murzak", "url": "https://github.com/IvanMurzak" },
-  "version": "1.0.1",
+  "version": "1.0.2",
   "unity": "2019.2",
   "description": "Shapes combine with RectTransform. Saving Aspect Ratio and two modes: Fit and Fill",
   "dependencies": {
