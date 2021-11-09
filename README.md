@@ -67,6 +67,7 @@ When NPM repository added, you may optionally add all extensions from the list b
 
 ## Shapes RectTransform
 ![npm](https://img.shields.io/npm/v/extensions.unity.shapes.recttransform)
+
 ![Shapes RectTransform demo](https://media.giphy.com/media/nn779lmlBy5FgFwQqB/giphy.gif)
 <pre><code>{
   "dependencies": {
