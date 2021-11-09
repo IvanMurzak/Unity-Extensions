@@ -5,6 +5,7 @@
         "UniRx",
         "UniTask",
         "Extensions.Unity",
+        "Extensions.Unity.Saver",
         "Zenject"
     ],
     "includePlatforms": [],

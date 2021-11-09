@@ -1,8 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Text;
 using UnityEngine.Networking;
+using Newtonsoft.Json;
 
 namespace Network.Extension
 {
@@ -22,10 +21,12 @@ namespace Network.Extension
 			var json		= JsonConvert.SerializeObject(data);
 			var byteData	= Encoding.UTF8.GetBytes(json);
 
-	#if UNITY_EDITOR
+#if UNITY_EDITOR
+#pragma warning disable CS0168 // Variable is declared but never used
 			try { DebugFormat.Log<RequestPost<T1, T2>>($"JSON {RESTMethod}:\n\n{JsonPrettify(json)}\n"); }
 			catch (Exception e)		{ DebugFormat.Log<RequestPost<T1, T2>>($"JSON {RESTMethod}:\n\n{json}\n"); }
-	#endif
+#pragma warning restore CS0168 // Variable is declared but never used
+#endif
 
 			return new UnityWebRequest(endpoint)
 			{

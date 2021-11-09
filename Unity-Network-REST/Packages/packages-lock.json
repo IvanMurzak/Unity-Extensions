@@ -174,12 +174,19 @@
       }
     },
     "extensions.unity.base": {
-      "version": "1.8.17",
+      "version": "1.9.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.neuecc.unirx": "7.1.0"
       },
+      "url": "https://registry.npmjs.org"
+    },
+    "extensions.unity.saver": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://registry.npmjs.org"
     },
     "jillejr.newtonsoft.json-for-unity": {

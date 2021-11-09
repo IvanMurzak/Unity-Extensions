@@ -10,7 +10,7 @@ public abstract class BaseMonoBehaviour : SerializedMonoBehaviour
     public new Animation animation		=> mAnimation ? mAnimation : mAnimation = GetComponent<Animation>();
 
     [HideInInspector, System.NonSerialized] private Animator mAnimator;
-    public new Animator animator		=> mAnimator ? mAnimator : mAnimator = GetComponent<Animator>();
+    public     Animator animator		=> mAnimator ? mAnimator : mAnimator = GetComponent<Animator>();
 
     [HideInInspector, System.NonSerialized] private AudioSource mAudio;
     public new AudioSource audio		=> mAudio ? mAudio : mAudio = GetComponent<AudioSource>();

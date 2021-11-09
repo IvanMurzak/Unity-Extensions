@@ -103,7 +103,9 @@ namespace Network.Extension
 				await unityRequest.SendWebRequest()
 					.AsObservable(Progress.CreateOnlyValueChanged<float>(ProcessProgress));
 			}
+#pragma warning disable CS0168 // Variable is declared but never used
 			catch (Exception e) { success = false; }
+#pragma warning restore CS0168 // Variable is declared but never used
 			finally
 			{
 				try
@@ -178,6 +180,7 @@ namespace Network.Extension
 			return this;
 		}
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
 		protected	abstract	UnityWebRequest					CreateUnityWebRequest			(string endpoint);
 		protected	virtual		async UniTask					OnDataReceived					(T data) => ResponseData = data;
 		protected	virtual		async UniTask					PrepeareRequest					(UnityWebRequest unityRequest)
@@ -226,6 +229,7 @@ namespace Network.Extension
 		{
 			Events.SendProgress(progress);
 		}
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 		protected	virtual		string							GetJSON							(UnityWebRequest unityRequest)
 		{
 			var bytes = unityRequest.downloadHandler.data;
@@ -246,8 +250,10 @@ namespace Network.Extension
 				Events.SendSerializationError(e.Message);
 				DebugFormat.LogException<Request<T>>(e);
 
+#pragma warning disable CS0168 // Variable is declared but never used
 				try					{ DebugFormat.LogError(this, $"JSON ({typeof(K).Name}):\n\n{JsonPrettify(json)}\n"); }
-				catch(Exception e2) { DebugFormat.LogError(this, $"JSON ({typeof(K).Name}):\n\n{json}\n"); }
+				catch (Exception e2) { DebugFormat.LogError(this, $"JSON ({typeof(K).Name}):\n\n{json}\n"); }
+#pragma warning restore CS0168 // Variable is declared but never used
 			}
 			return default(K);
 		}
