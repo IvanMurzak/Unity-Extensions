@@ -112,9 +112,18 @@ namespace Network.Extension
 				{
 					await RequestPostprocessing(unityRequest);
 
-					if (unityRequest.result == UnityWebRequest.Result.ConnectionError)	await ProcessNetworkError	(unityRequest);
-					if (unityRequest.result == UnityWebRequest.Result.ProtocolError)	await ProcessHttpError		(unityRequest);
-					if (unityRequest.isDone && unityRequest.result == UnityWebRequest.Result.Success)
+#if UNITY_2020_1_OR_NEWER
+					var isConnectionError	= unityRequest.result == UnityWebRequest.Result.ConnectionError;
+					var isProtocolError		= unityRequest.result == UnityWebRequest.Result.ProtocolError;
+					success = unityRequest.isDone && unityRequest.result == UnityWebRequest.Result.Success;
+#else
+					var isConnectionError	= unityRequest.isNetworkError;
+					var isProtocolError		= unityRequest.isHttpError;
+					success = unityRequest.isDone && !unityRequest.isNetworkError && !unityRequest.isHttpError;
+#endif
+					if (isConnectionError)	await ProcessNetworkError(unityRequest);
+					if (isProtocolError)	await ProcessHttpError(unityRequest);
+					if (success)
 					{
 						var json = GetJSON(unityRequest);
 						ResponseRawData = json;
