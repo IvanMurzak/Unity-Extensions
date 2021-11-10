@@ -2,12 +2,12 @@
   "name": "extensions.unity.ui",
   "displayName": "Unity UI extensions",
   "author": { "name": "Ivan Murzak", "url": "https://github.com/IvanMurzak" },
-  "version": "1.3.2",
+  "version": "1.3.3",
   "unity": "2019.2",
   "description": "Helper classes for Unity UI",
   "dependencies": {
-    "extensions.unity.base": "1.8.19",
-    "extensions.unity.unirx": "1.1.5"
+    "extensions.unity.base": "1.9.1",
+    "extensions.unity.unirx": "1.1.6"
   },
   "scopedRegistries": [
     {
