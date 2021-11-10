@@ -33,7 +33,7 @@ When NPM repository added, you may optionally add all extensions from the list b
 ![npm](https://img.shields.io/npm/v/extensions.unity.saver)
 <pre><code>{
   "dependencies": {
-    "extensions.unity.saver": "1.0.1"
+    "extensions.unity.saver": "1.0.2"
   }
 }
 </code></pre>
@@ -89,6 +89,7 @@ When NPM repository added, you may optionally add all extensions from the list b
 <pre><code>{
   "dependencies": {
     "extensions.unity.base": "1.9.0",
+    "extensions.unity.saver": "1.0.2",
     "extensions.unity.network": "1.3.3",
     "extensions.unity.iap.store": "2.0.6",
     "extensions.unity.ui": "1.3.2",
