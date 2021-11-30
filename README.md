@@ -29,11 +29,14 @@ When NPM repository added, you may optionally add all extensions from the list b
 }
 </code></pre>
 
-## Unity-Saver
+## [Unity-Saver](https://github.com/IvanMurzak/Unity-Saver)
 ![npm](https://img.shields.io/npm/v/extensions.unity.saver)
+
+![Unity Saver Settings](https://imgur.com/0RQeUQg.gif)
+
 <pre><code>{
   "dependencies": {
-    "extensions.unity.saver": "1.0.2"
+    "extensions.unity.saver": "1.0.6"
   }
 }
 </code></pre>
