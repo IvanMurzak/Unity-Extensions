@@ -41,7 +41,7 @@ When NPM repository added, you may optionally add all extensions from the list b
 }
 </code></pre>
 
-## Unity Network REST extension
+## [Unity Network REST](https://github.com/IvanMurzak/Unity-Network-REST)
 ![npm](https://img.shields.io/npm/v/extensions.unity.network)
 <pre><code>{
   "dependencies": {
