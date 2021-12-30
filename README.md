@@ -50,7 +50,7 @@ When NPM repository added, you may optionally add all extensions from the list b
 }
 </code></pre>
 
-## Unity IAP extension
+## [Unity IAP Store](https://github.com/IvanMurzak/Unity-IAP-Store)
 ![npm](https://img.shields.io/npm/v/extensions.unity.iap.store)
 <pre><code>{
   "dependencies": {
