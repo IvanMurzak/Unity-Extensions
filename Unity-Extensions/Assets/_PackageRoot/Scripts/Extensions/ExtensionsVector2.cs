@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Extensions.Utils;
+using UnityEngine;
 
 /// <summary>
 /// Extension methods for UnityEngine.Vector2.
@@ -119,6 +120,6 @@ public static class ExtensionsVector2
 
     public static float Random(this Vector2 v)
     {
-        return UnityEngine.Random.Range(v.x, v.y);
+        return RandomEx.Range(v.x, v.y);
     }
 }

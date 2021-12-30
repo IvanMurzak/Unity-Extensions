@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Extensions.Utils;
+using UnityEngine;
 
 
 /// <summary>
@@ -65,8 +66,8 @@ public static class ExtensionsVector2Int
         return new Vector3(v.x * o.x, v.y * o.y, o.z);
     }
 
-	public static float Random(this Vector2Int v)
+	public static int Random(this Vector2Int v)
 	{
-		return UnityEngine.Random.Range(v.x, v.y);
+        return RandomEx.Range(v.x, v.y);
 	}
 }
