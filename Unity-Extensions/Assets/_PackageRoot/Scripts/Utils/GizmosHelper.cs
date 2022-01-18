@@ -33,17 +33,38 @@ public static class GizmosHelper
             if (closed) Gizmos.DrawLine(vertices[vertices.Length - 1], vertices[0]);
         }
     }
+    public static void DrawPath(Vector3Int[] vertices, Color color, bool closed = false)
+    {
+        if (vertices != null && vertices.Length > 0)
+        {
+            Gizmos.color = color;
+            for (int i = 1; i < vertices.Length; i++)
+                Gizmos.DrawLine(vertices[i - 1], vertices[i]);
+
+            if (closed) Gizmos.DrawLine(vertices[vertices.Length - 1], vertices[0]);
+        }
+    }
 
     public static void DrawBounds(Bounds bounds, Color color)
     {
-        DrawPath(new Vector3[]
-        {
-            bounds.min,
-            new Vector3(bounds.max.x, bounds.min.y),
-            bounds.max,
-            new Vector3(bounds.min.x, bounds.max.y)
-        }, color, true);
+        var p1 = new Vector3(bounds.min.x, bounds.min.y, bounds.min.z);
+        var p2 = new Vector3(bounds.min.x, bounds.min.y, bounds.min.z);
+
+        Gizmos.color = color;
+
+        Gizmos.DrawLine(p1, p2 = p2.SetY(bounds.max.y)); Gizmos.DrawLine(p2, p2.SetZ(bounds.max.z));
+        Gizmos.DrawLine(p2, p1 = p2.SetX(bounds.max.x)); Gizmos.DrawLine(p1, p1.SetZ(bounds.max.z));
+        Gizmos.DrawLine(p1, p2 = p1.SetY(bounds.min.y)); Gizmos.DrawLine(p2, p2.SetZ(bounds.max.z));
+        Gizmos.DrawLine(p2, p1 = p2.SetX(bounds.min.x)); Gizmos.DrawLine(p1, p1.SetZ(bounds.max.z));
+
+        p1 = p2 = p1.SetZ(bounds.max.z);
+
+        Gizmos.DrawLine(p1, p2 = p2.SetY(bounds.max.y));
+        Gizmos.DrawLine(p2, p1 = p2.SetX(bounds.max.x));
+        Gizmos.DrawLine(p1, p2 = p1.SetY(bounds.min.y));
+        Gizmos.DrawLine(p2, p1 = p2.SetX(bounds.min.x));
     }
+    public static void DrawBounds(BoundsInt bounds, Color color) => DrawBounds(bounds.ToBounds(), color);
 
     public static void DrawX(Vector3 point, float radius)
     {
