@@ -34,6 +34,17 @@ public static class GizmosHelper
         }
     }
 
+    public static void DrawBounds(Bounds bounds, Color color)
+    {
+        DrawPath(new Vector3[]
+        {
+            bounds.min,
+            new Vector3(bounds.max.x, bounds.min.y),
+            bounds.max,
+            new Vector3(bounds.min.x, bounds.max.y)
+        }, color, true);
+    }
+
     public static void DrawX(Vector3 point, float radius)
     {
 		DrawX(point, radius, Gizmos.color);

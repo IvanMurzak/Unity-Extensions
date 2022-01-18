@@ -6,7 +6,7 @@ namespace Extensions.Utils
     {
         static Random random = new Random();
 
-        public static Random Instance => random ??= new Random();
+        public static Random Instance => random == null ? random = new Random() : random;
 
         public static int Range(int from, int to) => random.Next(from, to);
         public static long Range(long from, long to) => from + (long)(random.NextDouble() * (to - from));
