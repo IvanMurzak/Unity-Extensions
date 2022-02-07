@@ -79,18 +79,26 @@ public static class ExtensionsVector2
 
 
 
-
-
     #region To
     public static Vector2Int ToInt(this Vector2 v)
     {
         return new Vector2Int((int)v.x , (int)v.y);
+    }
+    public static Vector2Int RoundToInt(this Vector2 v)
+    {
+        return new Vector2Int(Mathf.RoundToInt(v.x), Mathf.RoundToInt(v.y));
+    }
+    public static Vector2Int CeilToInt(this Vector2 v)
+    {
+        return new Vector2Int(Mathf.CeilToInt(v.x), Mathf.CeilToInt(v.y));
     }
     public static Vector3 ToVector3(this Vector2 v)
     {
         return new Vector3(v.x, v.y, 0);
     }
     #endregion
+
+
 
     #region Math
     public static Vector2 Rotate(this Vector2 v, float a)

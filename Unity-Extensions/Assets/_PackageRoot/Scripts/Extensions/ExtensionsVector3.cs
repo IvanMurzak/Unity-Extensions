@@ -126,6 +126,14 @@ public static class ExtensionsVector3
     {
         return new Vector3Int((int)v.x, (int)v.y, (int)v.z);
     }
+    public static Vector3Int RoundToInt(this Vector3 v)
+    {
+        return new Vector3Int(Mathf.RoundToInt(v.x), Mathf.RoundToInt(v.y), Mathf.RoundToInt(v.z));
+    }
+    public static Vector3Int CeilToInt(this Vector3 v)
+    {
+        return new Vector3Int(Mathf.CeilToInt(v.x), Mathf.CeilToInt(v.y), Mathf.CeilToInt(v.z));
+    }
 
     public static Vector2 ToVector2XY(this Vector3 v)
     {
