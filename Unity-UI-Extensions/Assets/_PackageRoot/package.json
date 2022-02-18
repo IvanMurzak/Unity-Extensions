@@ -2,7 +2,7 @@
   "name": "extensions.unity.ui",
   "displayName": "Unity UI extensions",
   "author": { "name": "Ivan Murzak", "url": "https://github.com/IvanMurzak" },
-  "version": "1.3.4",
+  "version": "1.3.5",
   "unity": "2019.2",
   "description": "Helper classes for Unity UI",
   "dependencies": {

@@ -5,14 +5,22 @@ public static class ExtensionImage
 {
 	public static float Alpha(this Image image) => image.color.a;
 	public static Image SetAlpha(this Image image, float alpha)
-	{
-		image.color = image.color.SetA(alpha);
+    {
+        if (ReferenceEquals(image, null)) return image;
+        image.color = image.color.SetA(alpha);
 		return image;
     }
 
     public static Image FillInto(this Image image) => FillInto(image, Vector2.zero);
     public static Image FillInto(this Image image, Vector2 oversize, RectTransform rectTransform = null, Sprite sprite = null)
     {
+        if (ReferenceEquals(rectTransform, null))
+        {
+            if (ReferenceEquals(image, null)) return image;
+            if (ReferenceEquals(image.rectTransform, null))
+                return image;
+        }
+
         float width;
         float height;
 
@@ -41,6 +49,13 @@ public static class ExtensionImage
     public static Image FitInto(this Image image) => FitInto(image, Vector2.zero);
     public static Image FitInto(this Image image, Vector2 oversize, RectTransform rectTransform = null, Sprite sprite = null)
     {
+        if (ReferenceEquals(rectTransform, null))
+        {
+            if (ReferenceEquals(image, null)) return image;
+            if (ReferenceEquals(image.rectTransform, null))
+                return image;
+        }
+
         float width;
         float height;
 
@@ -68,6 +83,7 @@ public static class ExtensionImage
     }
     public static Image CorrectAspectRatioFromHeight(this Image image, Sprite sprite = null)
     {
+        if (ReferenceEquals(image, null)) return image;
         sprite = sprite ?? image.sprite;
         var aspectRatio = sprite.textureRect.size.x / sprite.textureRect.size.y;
         image.rectTransform.SetAspectRatioFromHeight(aspectRatio);
@@ -75,6 +91,7 @@ public static class ExtensionImage
     }
     public static Image CorrectAspectRatioFromWidth(this Image image, Sprite sprite = null)
     {
+        if (ReferenceEquals(image, null)) return image;
         sprite = sprite ?? image.sprite;
         var aspectRatio = sprite.textureRect.size.x / sprite.textureRect.size.y;
         image.rectTransform.SetAspectRatioFromWidth(aspectRatio);
